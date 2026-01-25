@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Description="Demonstrates the report that contains two design pages - a cover page and a page with data. To create such a report:&#13;&#10;- to add a design page, click the &quot;New Report Page&quot; button on the toolbar;&#13;&#10;- to remove a page, click &quot;Delete Page&quot; button;&#13;&#10;- to reorder pages, drag the page tab to the desired place." ReportInfo.Created="01/17/2008 03:55:42" ReportInfo.Modified="01/24/2026 14:01:06" ReportInfo.CreatorVersion="2026.1.3.0">
+  <Styles>
+    <Style Name="EvenRows" Font="Arial, 10pt"/>
+  </Styles>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGiIkhiAmJABLrmcJz4mv/9tHPe83Xex5HRpn/8KYK6wCw8g7QuroFJ/No1noslRHFKZjmONV4oSi0DOXf3DiN0qBHY3AzedI8vEcKJFctpa371eHzoWP0kAwEkxYhI6zTn0FmrF8tuGCQg5zQBv9D0x5mCLIX8dbpS6G7k9Ex17eDzT9EKxdEjaDnqpCfH7FXZQf6Wfm2ky1XPGq4GQhtAI=">
+      <TableDataSource Name="__EFMigrationsHistory" DataType="System.Int32" Enabled="true" TableName="__EFMigrationsHistory">
+        <Column Name="MigrationId" DataType="System.String"/>
+        <Column Name="ProductVersion" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Traites" DataType="System.Int32" Enabled="true" TableName="Traites">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DateEcheance" DataType="System.DateTime"/>
+        <Column Name="Ville" DataType="System.String"/>
+        <Column Name="DateEdition" DataType="System.DateTime"/>
+        <Column Name="RIB" DataType="System.String"/>
+        <Column Name="Montant" DataType="System.Decimal"/>
+        <Column Name="Monnaie" DataType="System.String"/>
+        <Column Name="OrdreDe" DataType="System.String"/>
+        <Column Name="Payer" DataType="System.String"/>
+        <Column Name="Aval" DataType="System.String"/>
+        <Column Name="Banque" DataType="System.String"/>
+        <Column Name="Protestable" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="MontantEnLettres" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Relation Name="CategoriesProducts" ReferenceName="NorthWind.CategoriesProducts" ParentDataSource="Categories" ChildDataSource="Products" ParentColumns="CategoryID" ChildColumns="CategoryID" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="CoverPage" RawPaperSize="9" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle2" Width="793.8" Height="1122.66">
+      <TextObject Name="Text1" Left="179.55" Top="56.7" Width="113.4" Height="18.9" Text="[Traites.DateEcheance]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Text2" Left="321.3" Top="56.7" Width="94.5" Height="18.9" Text="[Traites.CreatedAt]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="330.75" Top="37.8" Width="94.5" Height="18.9" Text="[Traites.Ville]" Font="Arial, 10pt"/>
+      <TextObject Name="Text4" Left="491.4" Top="85.05" Width="151.2" Height="28.35" Text="[Traites.Montant]" Format="Currency" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text5" Left="264.6" Top="94.5" Width="160.65" Height="18.9" Text="[Traites.RIB]" Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="217.35" Top="217.35" Width="94.5" Height="18.9" Text="[Traites.DateEcheance]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Text8" Left="113.4" Top="217.35" Width="94.5" Height="18.9" Text="[Traites.CreatedAt]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="9.45" Top="217.35" Width="94.5" Height="18.9" Text="[Traites.Ville]" Font="Arial, 10pt"/>
+      <TextObject Name="Text10" Left="444.15" Top="255.15" Width="189" Height="37.8" Text="[Traites.Banque]" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="9.45" Top="179.55" Width="633.15" Height="18.9" Text="[Traites.MontantEnLettres]" Font="Arial, 10pt"/>
+      <TextObject Name="Text12" Left="75.6" Top="255.15" Width="170.1" Height="18.9" Text="[Traites.RIB]" Font="Arial, 10pt"/>
+      <TextObject Name="Text13" Left="283.5" Top="274.05" Width="141.75" Height="28.35" Text="[Traites.OrdreDe]" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+  </ReportPage>
+</Report>

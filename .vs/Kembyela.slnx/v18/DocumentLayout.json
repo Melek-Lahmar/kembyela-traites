@@ -1,0 +1,422 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MSI\\source\\repos\\Kembyela\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\traite\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\traite\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\models\\traite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\models\\traite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\traite\\print.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\traite\\print.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\controllers\\traitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\controllers\\traitecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\traite\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\traite\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\20260125112103_M3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Kembyela\\Migrations\\20260125112103_M3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\traite\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\traite\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\helpers\\numbertowordsfrench.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\helpers\\numbertowordsfrench.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\services\\ipdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\services\\ipdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\services\\pdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\services\\pdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\kembyela.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\kembyela.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\helpers\\pdfcoordinateshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\helpers\\pdfcoordinateshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|c:\\users\\msi\\source\\repos\\kembyela\\kembyela\\migrations\\20260119132922_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{271C1595-5839-2137-4969-DC998C020D90}|Kembyela\\Kembyela.csproj|solutionrelative:kembyela\\migrations\\20260119132922_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 13,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6d4078d1-5951-4ed1-ac0e-0a8099c1cce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Program.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Program.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Program.cs",
+              "RelativeToolTip": "Kembyela\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:04:18.409Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TraiteController.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Controllers\\TraiteController.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Controllers\\TraiteController.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Controllers\\TraiteController.cs",
+              "RelativeToolTip": "Kembyela\\Controllers\\TraiteController.cs",
+              "ViewState": "AgIAAAsBAAAAAAAAAAAIwBgBAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:02:28.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PdfService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Services\\PdfService.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Services\\PdfService.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Services\\PdfService.cs",
+              "RelativeToolTip": "Kembyela\\Services\\PdfService.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAgwG8AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:08:41.257Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Traite.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Models\\Traite.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Models\\Traite.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Models\\Traite.cs",
+              "RelativeToolTip": "Kembyela\\Models\\Traite.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwA0AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:01:54.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Create.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Traite\\Create.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Create.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Traite\\Create.cshtml",
+              "ViewState": "AgIAAKwBAAAAAAAAAAAmwNYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-19T13:02:58.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "Kembyela\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:54:35.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADwBAAAAAAAAAAAmwGYBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-19T13:28:45.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Print.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Print.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Traite\\Print.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Print.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Traite\\Print.cshtml",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAKUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-19T13:03:21.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Traite\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Delete.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Traite\\Delete.cshtml",
+              "ViewState": "AgIAACQAAAAAAAAAAAAmwEgAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-19T13:27:35.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Index.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Traite\\Index.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Traite\\Index.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Traite\\Index.cshtml",
+              "ViewState": "AgIAALUAAAAAAAAAAAAmwN8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-19T13:27:13.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "20260125112103_M3.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\20260125112103_M3.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Migrations\\20260125112103_M3.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\20260125112103_M3.cs",
+              "RelativeToolTip": "Kembyela\\Migrations\\20260125112103_M3.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T11:21:03.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-25T01:28:14.04Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "NumberToWordsFrench.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Helpers\\NumberToWordsFrench.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Helpers\\NumberToWordsFrench.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Helpers\\NumberToWordsFrench.cs",
+              "RelativeToolTip": "Kembyela\\Helpers\\NumberToWordsFrench.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAcwI4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:04:07.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Kembyela.csproj",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Kembyela.csproj",
+              "RelativeDocumentMoniker": "Kembyela\\Kembyela.csproj",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Kembyela.csproj",
+              "RelativeToolTip": "Kembyela\\Kembyela.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-24T13:17:13.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IPdfService.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Services\\IPdfService.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Services\\IPdfService.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Services\\IPdfService.cs",
+              "RelativeToolTip": "Kembyela\\Services\\IPdfService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:08:17.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\appsettings.json",
+              "RelativeDocumentMoniker": "Kembyela\\appsettings.json",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\appsettings.json",
+              "RelativeToolTip": "Kembyela\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-19T13:04:33.752Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "Kembyela\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "Kembyela\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-01-19T13:06:25.794Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "Kembyela\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "Kembyela\\Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-24T13:33:12.358Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PdfCoordinatesHelper.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Helpers\\PdfCoordinatesHelper.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Helpers\\PdfCoordinatesHelper.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Helpers\\PdfCoordinatesHelper.cs",
+              "RelativeToolTip": "Kembyela\\Helpers\\PdfCoordinatesHelper.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAswD4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:10:05.935Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Kembyela\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:38:14.796Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Kembyela\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:14:47.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "20260119132922_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\20260119132922_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Kembyela\\Migrations\\20260119132922_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\MSI\\source\\repos\\Kembyela\\Kembyela\\Migrations\\20260119132922_InitialCreate.cs",
+              "RelativeToolTip": "Kembyela\\Migrations\\20260119132922_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T13:29:22.455Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

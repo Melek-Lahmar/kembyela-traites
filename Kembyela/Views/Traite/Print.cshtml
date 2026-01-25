@@ -1,0 +1,391 @@
+﻿@model Kembyela.Models.Traite
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        /* ===================== */
+        /* RESET ET CONFIG A4    */
+        /* ===================== */
+        @@page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+            background: white !important;
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            color: black !important;
+        }
+
+        /* ===================== */
+        /* CONTENEUR PRINCIPAL   */
+        /* ===================== */
+        .page-a4 {
+            position: relative;
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            overflow: hidden;
+        }
+
+        /* ===================== */
+        /* CHAMPS AVEC COORDONNÉES EXACTES EN CM */
+        /* ===================== */
+        .field {
+            position: absolute;
+            color: black !important;
+            background: transparent !important;
+            border: none !important;
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            white-space: nowrap;
+            overflow: visible;
+        }
+
+        /* Conversion: 1 cm = 10mm */
+        /* A4: 210mm = 21cm, 297mm = 29.7cm */
+
+        /* MontantEnLettres: L=0.25cm, T=4.75cm, W=16.15cm, H=0.5cm */
+        .montant-en-lettres {
+            left: 8.25mm; /* 0.75cm = 2.75mm */
+            
+            top: 48.25mm;     /* 4.75cm = 47.5mm */
+            width: 150mm;  /* 15cm = 150mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Ville (Haut): L=8.75cm, T=1cm, W=2.5cm, H=0.5cm */
+        .ville-haut {
+            left: 88.5mm;    /* 8.75cm = 87.5mm */
+            top: 10mm;       /* 1cm = 10mm */
+            width: 25mm;     /* 2.5cm = 25mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* Ville (bas): L=0.25cm, T=5.75cm, W=2.5cm, H=0.5cm */
+        .ville-bas {
+            left: 7.5mm;     /* 0.75cm = 7.5mm */
+            top: 57.5mm;     /* 5.75cm = 57.5mm */
+            width: 22.5mm;     /* 2.25cm = 22.5mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* CreatedAt (Haut): L=8.5cm, T=1.5cm, W=2.5cm, H=0.5cm */
+        .created-at-haut {
+            left: 88mm; /* 8.75cm = 87.5mm */
+            top: 15mm;       /* 1.5cm = 15mm */
+            width: 25mm;     /* 2.5cm = 25mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* CreatedAt (bas): L=3cm, T=5.75cm, W=2.5cm, H=0.5cm */
+        .created-at-bas {
+            left: 32.5mm;      /* 3.25cm = 32.5mm */
+            top: 57.5mm;     /* 5.75cm = 57.5mm */
+            width: 25mm;     /* 2.5cm = 25mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* DateEcheance (Haut): L=4.75cm, T=1.5cm, W=3cm, H=0.5cm */
+        .date-echeance-haut {
+            left: 51mm;    /* 4.75cm = 47.5mm */
+            top: 15mm;       /* 1.5cm = 15mm */
+            width: 30mm;     /* 3cm = 30mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* Aval: L=4.25cm, T=8.25cm, W=2.5cm, H=0.5cm */
+        .aval {
+            left: 42.5mm;    /* 4.25cm = 42.5mm */
+            top: 82.5mm;     /* 8.25cm = 82.5mm */
+            width: 20mm;     /* 2cm = 20mm */
+            height: 10mm;     /* 1 cm = 10mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* DateEdition: L=5.75cm, T=5.75cm, W=2.5cm, H=0.5cm */
+        .date-edition {
+            left: 61mm; /* 6cm = 60mm                         WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR */
+            top: 57.5mm;     /* 5.75cm = 57.5mm */
+            width: 25mm;     /* 2.5cm = 25mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* RIB (Haut): L=7cm, T=2.5cm, W=4.25cm, H=0.5cm */
+        .rib-haut {
+            left: 54.35mm;      /* 7cm = 70mm */
+            top: 25mm;       /* 2.5cm = 25mm */
+            width: 42.5mm;   /* 4.25cm = 42.5mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 10pt;
+            letter-spacing: 1px;
+        }
+
+        /* RIB (bas): L=2cm, T=6.75cm, W=4.5cm, H=0.5cm */
+        .rib-bas {
+            left: 5.5mm;      /* 2cm = 20mm */
+            top: 67.5mm;     /* 6.75cm = 67.5mm */
+            width: 45mm;     /* 4.5cm = 45mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 10pt;
+            letter-spacing: 1px;
+        }
+
+        /* OrdreDe: L=0.25cm, T=3.75cm, W=3.75cm, H=0.75cm */
+        .ordre-de {
+            left: 3.75mm;     /* 0.75cm = 2.75mm */
+            top: 37.5mm;     /* 3.75cm = 37.5mm */
+            width: 30mm;   /* 3cm = 30mm */
+            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+        }
+
+        /* Banque: L=11.75cm, T=6.75cm, W=5cm, H=1cm */
+        .banque {
+            left: 122.5mm;   /* 12.25cm = 122.5mm */
+            top: 67.5mm;     /* 6.75cm = 67.5mm */
+            width: 50mm;     /* 5cm = 50mm */
+            height: 10mm;    /* 1cm = 10mm */
+            padding: 2mm 0 2mm 0;
+        }
+
+        /* Payer: L=7.75cm, T=7.25cm, W=3.25cm, H=1.5cm */
+        .payer {
+            left: 82.5mm;    /* 8.25cm = 82.5mm */
+            top: 72.5mm;     /* 7.25cm = 72.5mm */
+            width: 32.5mm;   /* 3.25cm = 32.5mm */
+            height: 15mm;    /* 1.5cm = 15mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+        }
+
+        /* Monnaie (Haut): L=16.25cm, T=2.5cm, W=0.75cm, H=0.5cm */
+        .monnaie-haut {
+            left: 162.5mm;   /* 16.25cm = 162.5mm */
+            top: 23.5mm; /* 2.25cm = 22.5mm */
+            width: 7.5mm;    /* 0.75cm = 7.5mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+        }
+
+        /* Monnaie (Bas): L=16cm, T=4cm, W=1cm, H=0.5cm */
+        .monnaie-bas {
+            left: 162.5mm; /* 16.25cm = 162.5mm */
+            top: 38.5mm; /* 3.75cm = 37.5mm */
+            width: 7.5mm; /* 0.75cm = 7.5mm */
+            height: 5mm;     /* 0.5cm = 5mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+        }
+
+        /* Montant (Haut): L=13cm, T=2.5cm, W=3cm, H=0.75cm */
+        .montant-haut {
+            left: 130mm;     /* 13cm = 130mm */
+            top: 23.5mm;       /* 2.25cm = 22.5mm */
+            width: 30mm;     /* 3cm = 30mm */
+            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* Montant (Bas): L=13cm, T=4cm, W=2.75cm, H=0.75cm */
+        .montant-bas {
+            left: 133.13mm;     /* 13cm = 130mm */
+            top: 38.5mm;       /* 3.75cm = 37.5mm */
+            width: 27.5mm;   /* 2.75cm = 27.5mm */
+            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            padding: 2mm 0 2mm 0;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* ===================== */
+        /* STYLES D'IMPRESSION   */
+        /* ===================== */
+        @@media print {
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+            
+            .page-a4 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* Force le noir et blanc */
+            * {
+                color: black !important;
+                background: transparent !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            /* Pas de bordures */
+            .field {
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+            
+            /* Cache tout sauf le contenu A4 */
+            body > *:not(.page-a4) {
+                display: none !important;
+            }
+        }
+
+        /* ===================== */
+        /* VISUALISATION ÉCRAN   */
+        /* ===================== */
+        @@media screen {
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
+                padding: 20px;
+                background: #f0f0f0;
+            }
+            
+            .page-a4 {
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-a4">
+        <!-- Montant en lettres -->
+        <div class="field montant-en-lettres">
+            @Model.MontantEnLettres
+        </div>
+
+        <!-- Ville (en haut) -->
+        <div class="field ville-haut">
+            @Model.Ville
+        </div>
+
+        <!-- Ville (en bas) -->
+        <div class="field ville-bas">
+            @Model.Ville
+        </div>
+
+        <!-- Date de création (en haut) -->
+        <div class="field created-at-haut">
+            @Model.CreatedAt.ToString("dd/MM/yyyy")
+        </div>
+
+        <!-- Date de création (en bas) -->
+        <div class="field created-at-bas">
+            @Model.CreatedAt.ToString("dd/MM/yyyy")
+        </div>
+
+        <!-- Date d'échéance (en haut) -->
+        <div class="field date-echeance-haut">
+            @Model.DateEcheance.ToString("dd/MM/yyyy")
+        </div>
+
+        <!-- Aval -->
+        <div class="field aval">
+            @Model.Aval
+        </div>
+
+        <!-- Date Edition -->
+        <div class="field date-edition">
+            @Model.DateEcheance.ToString("dd/MM/yyyy")
+        </div>
+
+        <!-- RIB (en haut) -->
+        <div class="field rib-haut">
+            @Html.Raw(Model.RIB)
+        </div>
+
+        <!-- RIB (en bas) -->
+        <div class="field rib-bas">
+            @Html.Raw(Model.RIB)
+        </div>
+
+        <!-- Ordre de -->
+        <div class="field ordre-de">
+            @Model.OrdreDe
+        </div>
+
+        <!-- Banque -->
+        <div class="field banque">
+            @Model.Banque
+        </div>
+
+        <!-- Payer -->
+        <div class="field payer">
+            @Model.Payer
+        </div>
+
+        <!-- Monnaie (en haut) -->
+        <div class="field monnaie-haut">
+            @Model.Monnaie
+        </div>
+
+        <!-- Monnaie (en bas) -->
+        <div class="field monnaie-bas">
+            @Model.Monnaie
+        </div>
+
+        <!-- Montant (en haut) -->
+        <div class="field montant-haut">
+            @Model.Montant.ToString("N3")
+        </div>
+
+        <!-- Montant (en bas) -->
+        <div class="field montant-bas">
+            @Model.Montant.ToString("N3")
+        </div>
+    </div>
+
+    <script>
+
+        // Auto-impression optionnelle (décommentez si besoin)
+        // window.onload = function() {
+        //     setTimeout(function() {
+        //         window.print();
+        //     }, 500);
+        // }
+    </script>
+</body>
+</html>

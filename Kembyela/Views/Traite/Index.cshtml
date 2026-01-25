@@ -1,0 +1,224 @@
+﻿@model List<Kembyela.Models.Traite>
+
+@{
+    ViewData["Title"] = "Liste des Lettres de Change";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-file-invoice"></i> Lettres de Change</h1>
+        <a asp-action="Create" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus-circle"></i> Nouvelle Lettre
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Statistiques en haut de la page -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-5">
+                <div class="card bg-primary text-white mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-file-contract"></i> Total des Lettres</h5>
+                        <h2 class="card-text display-6">@Model.Count</h2>
+                        <p class="card-text">Lettres de change</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card bg-success text-white mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-money-bill-wave"></i> Montant Total</h5>
+                        <h2 class="card-text display-6">@Model.Sum(t => t.Montant).ToString("N3") DT</h2>
+                        <p class="card-text">Valeur totale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fas fa-list"></i> @Model.Count lettre(s) de change</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Date Création</th>
+                                <th>Échéance</th>
+                                <th>Bénéficiaire</th>
+                                <th>Montant (DT)</th>
+                                <th>Ville</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var traite in Model.OrderByDescending(t => t.CreatedAt))
+                            {
+                                <tr class="@(traite.EstEnRetard() ? "table-warning" : "")">
+                                    <td>
+                                        <span class="badge bg-secondary">#@traite.Id</span>
+                                    </td>
+                                    <td>
+                                        @traite.CreatedAt.ToString("dd/MM/yyyy")
+                                        <br><small class="text-muted">@traite.CreatedAt.ToString("HH:mm")</small>
+                                    </td>
+                                    <td>
+                                        @traite.DateEcheance.ToString("dd/MM/yyyy")
+                                        @if (traite.EstEnRetard())
+                                        {
+                                            <br>
+                                            <span class="badge bg-danger">En retard</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <strong>@traite.OrdreDe</strong>
+                                        <br><small>Payeur: @traite.Payer</small>
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold">@traite.GetMontantFormatted()</span>
+                                        <br><small class="text-muted">@traite.MontantEnLettres.Split(' ').Take(5).Aggregate((a, b) => a + " " + b)...</small>
+                                    </td>
+                                    <td>@traite.Ville</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <!-- Bouton Voir HTML -->
+                                            <a asp-action="Print" asp-route-id="@traite.Id"
+                                               class="btn btn-primary" target="_blank" title="Imprimer PDF Simple">
+                                                <i class="fas fa-print"></i>
+                                            </a>
+
+                                            <!-- Bouton Dupliquer -->
+                                            <button type="button" class="btn btn-warning duplicate-btn"
+                                                    data-id="@traite.Id" title="Dupliquer">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+
+                                            <!-- Bouton Supprimer -->
+                                            <a asp-action="Delete" asp-route-id="@traite.Id"
+                                               class="btn btn-danger" title="Supprimer">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Total:</strong> @Model.Count lettre(s)
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <strong>Montant total:</strong> @Model.Sum(t => t.Montant).ToString("N3") DT
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="display-1 text-muted mb-4">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <h2 class="text-muted">Aucune lettre de change</h2>
+            <p class="lead">Commencez par créer votre première lettre de change</p>
+            <a asp-action="Create" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-plus-circle"></i> Créer la première lettre
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Confirmation de suppression
+            $('.btn-danger').on('click', function(e) {
+                if (!confirm('Êtes-vous sûr de vouloir supprimer cette lettre de change ?')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Fonction de duplication
+            $('.duplicate-btn').on('click', function() {
+                var traiteId = $(this).data('id');
+
+                if (confirm('Voulez-vous dupliquer cette lettre de change ?')) {
+                    $.ajax({
+                        url: '@Url.Action("Duplicate", "Traite")',
+                        type: 'POST',
+                        data: { id: traiteId },
+                        success: function(response) {
+                            if (response.success) {
+                                alert('Lettre de change dupliquée avec succès!');
+                                window.location.reload();
+                            } else {
+                                alert('Erreur lors de la duplication: ' + response.message);
+                            }
+                        },
+                        error: function() {
+                            alert('Erreur lors de la requête.');
+                        }
+                    });
+                }
+            });
+
+            // Effets visuels
+            $('.btn-group .btn').hover(
+                function() {
+                    $(this).addClass('shadow');
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function() {
+                    $(this).removeClass('shadow');
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+
+    <style>
+        .btn-group .btn {
+            transition: all 0.3s ease;
+            margin-right: 2px;
+        }
+
+        .badge {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .table-warning {
+            background-color: #fff3cd;
+        }
+
+        /* Style pour les cartes de statistiques */
+        .card .display-6 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+    </style>
+}

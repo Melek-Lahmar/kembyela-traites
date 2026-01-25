@@ -1,0 +1,471 @@
+﻿@model Kembyela.Models.Traite
+
+@{
+    ViewData["Title"] = "Nouvelle Lettre de Change";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">📄 Nouvelle Lettre de Change</h1>
+
+    <!-- Messages d'alerte -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Formulaire principal -->
+    <form asp-action="Create" method="post" class="row g-3" id="traiteForm">
+        @Html.AntiForgeryToken()
+
+        <!-- Section 1: Informations de base -->
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Informations de base</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DateEdition" class="form-label fw-bold">Date d'édition *</label>
+                            <input asp-for="DateEdition" class="form-control" type="date" required>
+                            <span asp-validation-for="DateEdition" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DateEcheance" class="form-label fw-bold">Date d'échéance *</label>
+                            <input asp-for="DateEcheance" class="form-control" type="date" required>
+                            <span asp-validation-for="DateEcheance" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Ville" class="form-label fw-bold">Ville *</label>
+                            <input asp-for="Ville" class="form-control" placeholder="Ex: Tunis, Sfax..." required>
+                            <span asp-validation-for="Ville" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="RIB" class="form-label fw-bold">RIB (20 chiffres) *</label>
+                            <input asp-for="RIB" class="form-control" id="ribInput"
+                                   placeholder="12345678901234567890" maxlength="20" required>
+                            <div class="form-text">20 chiffres exactement, uniquement des nombres</div>
+                            <span asp-validation-for="RIB" class="text-danger small"></span>
+                            <div id="ribError" class="text-danger small d-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Montant -->
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> Montant</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Montant" class="form-label fw-bold">Montant *</label>
+                            <div class="input-group">
+                                <input asp-for="Montant" class="form-control" id="montantInput"
+                                       type="text"
+                                       placeholder="Ex: 15000 ou 12345,67"
+                                       required>
+                                <span class="input-group-text bg-light fw-bold">@Html.DisplayFor(model => model.Monnaie)</span>
+                            </div>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> Saisissez librement, formatage automatique à la sortie du champ
+                            </div>
+                            <span asp-validation-for="Montant" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Montant formaté</label>
+                            <div class="alert alert-light border" id="montantFormatte">
+                                <strong id="montantDisplay">-</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Bénéficiaire et paiement -->
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-users"></i> Bénéficiaire et paiement</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="OrdreDe" class="form-label fw-bold">À l'ordre de *</label>
+                                <input asp-for="OrdreDe" class="form-control" placeholder="Nom du bénéficiaire" required>
+                                <span asp-validation-for="OrdreDe" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Payer" class="form-label fw-bold">Payer *</label>
+                                <input asp-for="Payer" class="form-control" placeholder="Nom du payeur" required>
+                                <span asp-validation-for="Payer" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Aval" class="form-label">Aval (optionnel)</label>
+                                <input asp-for="Aval" class="form-control" placeholder="Nom de l'avaliseur">
+                                <span asp-validation-for="Aval" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Banque" class="form-label fw-bold">Banque *</label>
+                                <input asp-for="Banque" class="form-control" placeholder="Nom de la banque" required>
+                                <span asp-validation-for="Banque" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="form-check form-switch">
+                                <input asp-for="Protestable" class="form-check-input" type="checkbox" role="switch" checked>
+                                <label asp-for="Protestable" class="form-check-label fw-bold">
+                                    <i class="fas fa-exclamation-triangle"></i> Protestable
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg px-5 me-3" id="submitBtn">
+                <i class="fas fa-file-contract"></i> Générer
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5">
+                <i class="fas fa-list"></i> Voir la liste
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialiser les dates
+            initializeDates();
+
+            // Gestion du RIB
+            setupRibValidation();
+
+            // Gestion du montant
+            setupAmountHandling();
+
+            // Validation du formulaire
+            setupFormValidation();
+
+            // Nettoyage des erreurs
+            setupErrorCleanup();
+        });
+
+        function initializeDates() {
+            var today = new Date().toISOString().split('T')[0];
+            var nextMonth = new Date();
+            nextMonth.setMonth(nextMonth.getMonth() + 1);
+            var nextMonthStr = nextMonth.toISOString().split('T')[0];
+
+            $('#DateEdition').val(today);
+            $('#DateEcheance').val(nextMonthStr);
+        }
+
+        function setupRibValidation() {
+            $('#ribInput').on('input', function() {
+                var value = $(this).val().replace(/\D/g, '');
+                $(this).val(value);
+
+                var errorDiv = $('#ribError');
+                if (value.length === 20) {
+                    errorDiv.addClass('d-none');
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                } else {
+                    errorDiv.removeClass('d-none')
+                        .text(`20 chiffres requis (actuellement: ${value.length})`);
+                    $(this).removeClass('is-valid').addClass('is-invalid');
+                }
+            });
+        }
+
+        function setupAmountHandling() {
+            // Variable pour stocker la dernière valeur formatée
+            let derniereValeurFormatee = '';
+
+            // Pendant la saisie : seulement nettoyer (pas de formatage)
+            $('#montantInput').on('input', function() {
+                let valeur = $(this).val();
+                // Garde uniquement chiffres et virgule
+                valeur = valeur.replace(/[^\d,]/g, '');
+                // Pas plus d'une virgule
+                let virgules = (valeur.match(/,/g) || []).length;
+                if (virgules > 1) {
+                    valeur = valeur.replace(/,+$/, '');
+                }
+                $(this).val(valeur);
+
+                // Afficher en temps réel (sans ajouter de zéros)
+                afficherMontantTempsReel(valeur);
+            });
+
+            // À la perte de focus : formater avec zéros
+            $('#montantInput').on('blur', function() {
+                formatMontantFinal();
+                derniereValeurFormatee = $(this).val();
+            });
+
+            // Quand on revient sur le champ, remettre la version non formatée
+            $('#montantInput').on('focus', function() {
+                if (derniereValeurFormatee) {
+                    // Si c'était formaté avec des zéros, enlever les zéros inutiles
+                    let valeur = derniereValeurFormatee;
+                    if (valeur.includes(',')) {
+                        let parties = valeur.split(',');
+                        let decimales = parties[1];
+                        // Enlever les zéros de fin
+                        while (decimales.endsWith('0') && decimales.length > 1) {
+                            decimales = decimales.slice(0, -1);
+                        }
+                        if (decimales === '000') {
+                            $(this).val(parties[0]); // Pas de virgule si c'est .000
+                        } else {
+                            $(this).val(parties[0] + ',' + decimales);
+                        }
+                    }
+                }
+            });
+        }
+
+        function afficherMontantTempsReel(valeur) {
+            let partieEntiere = '0';
+            let partieDecimale = '';
+
+            if (valeur.includes(',')) {
+                let parties = valeur.split(',');
+                partieEntiere = parties[0] || '0';
+                partieDecimale = parties[1] || '';
+
+                // Nettoyer partie entière
+                partieEntiere = partieEntiere.replace(/^0+/, '') || '0';
+
+                // Afficher ce que l'utilisateur est en train de taper
+                let affichage = formatWithSpaces(partieEntiere);
+                if (partieDecimale !== '') {
+                    affichage += ',' + partieDecimale;
+                } else if (valeur.endsWith(',')) {
+                    affichage += ',';
+                }
+
+                $('#montantDisplay').text(affichage + ' DT');
+            } else {
+                // Pas de virgule
+                partieEntiere = valeur.replace(/^0+/, '') || '0';
+                $('#montantDisplay').text(formatWithSpaces(partieEntiere) + ' DT');
+            }
+        }
+
+        function formatMontantFinal() {
+            let input = $('#montantInput');
+            let valeur = input.val();
+
+            if (!valeur || valeur.trim() === '') {
+                input.addClass('is-invalid');
+                return;
+            }
+
+            // Sépare partie entière et décimale
+            let partieEntiere = '0';
+            let partieDecimale = '';
+
+            if (valeur.includes(',')) {
+                let parties = valeur.split(',');
+                partieEntiere = parties[0] || '0';
+                partieDecimale = parties[1] || '';
+            } else {
+                // Pas de virgule
+                partieEntiere = valeur;
+                partieDecimale = '';
+            }
+
+            // Nettoyer partie entière
+            partieEntiere = partieEntiere.replace(/^0+/, '') || '0';
+
+            // Vérifier si c'est un nombre valide
+            if (partieEntiere === '' || isNaN(parseInt(partieEntiere))) {
+                input.addClass('is-invalid');
+                return;
+            }
+
+            let valeurFinale = '';
+            let valeurNumerique = 0;
+
+            // Ajouter les zéros manquants à la partie décimale
+            if (valeur.includes(',')) {
+                // Si l'utilisateur a mis une virgule
+                if (partieDecimale.length === 0) {
+                    partieDecimale = '000';
+                } else if (partieDecimale.length === 1) {
+                    partieDecimale = partieDecimale + '00';
+                } else if (partieDecimale.length === 2) {
+                    partieDecimale = partieDecimale + '0';
+                }
+                // Si déjà 3 chiffres, on garde tel quel
+
+                // Construire la valeur finale
+                valeurFinale = partieEntiere + ',' + partieDecimale;
+                valeurNumerique = parseFloat(partieEntiere + '.' + partieDecimale);
+
+                // Afficher avec séparateurs de milliers
+                let affichage = formatWithSpaces(partieEntiere) + ',' + partieDecimale;
+                $('#montantDisplay').text(affichage + ' DT');
+            } else {
+                // Pas de virgule dans la saisie
+                valeurFinale = partieEntiere + ',000';
+                valeurNumerique = parseFloat(partieEntiere + '.000');
+
+                $('#montantDisplay').text(formatWithSpaces(partieEntiere) + ',000 DT');
+            }
+
+            // Mettre à jour le champ d'entrée
+            input.val(valeurFinale);
+
+            // Validation
+            if (valeurNumerique > 0 && valeurNumerique <= 999999999.999) {
+                input.removeClass('is-invalid').addClass('is-valid');
+                // Mettre à jour la valeur du champ pour la soumission
+                $('#Montant').val(valeurNumerique.toFixed(3));
+            } else {
+                input.addClass('is-invalid');
+            }
+        }
+
+        function formatWithSpaces(nombre) {
+            return nombre.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        function setupFormValidation() {
+            $('#traiteForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Formater tous les champs montants avant validation
+                formatMontantFinal();
+
+                // Petite pause pour laisser le temps au formatage
+                setTimeout(function() {
+                    if (!validateForm()) {
+                        scrollToTop();
+                        return false;
+                    }
+
+                    disableSubmitButton();
+                    $('#traiteForm')[0].submit();
+                }, 50);
+            });
+        }
+
+        function validateForm() {
+            var isValid = true;
+            var errors = [];
+
+            // Validation RIB
+            var rib = $('#ribInput').val();
+            if (rib.length !== 20 || !/^\d+$/.test(rib)) {
+                errors.push('Le RIB doit contenir exactement 20 chiffres');
+                $('#ribInput').addClass('is-invalid');
+                isValid = false;
+            }
+
+            // Validation Montant - utiliser directement la valeur de l'input formaté
+            var montantInput = $('#montantInput').val();
+            if (!montantInput || montantInput.trim() === '') {
+                errors.push('Le montant est requis');
+                $('#montantInput').addClass('is-invalid');
+                isValid = false;
+            } else {
+                // Extraire la valeur numérique du champ formaté
+                let valeurFormatee = montantInput.replace(/\s/g, '').replace(',', '.');
+                let montantNum = parseFloat(valeurFormatee);
+
+                if (isNaN(montantNum) || montantNum <= 0) {
+                    errors.push('Le montant doit être un nombre positif');
+                    $('#montantInput').addClass('is-invalid');
+                    isValid = false;
+                } else if (montantNum > 999999999.999) {
+                    errors.push('Le montant ne peut pas dépasser 999 999 999,999');
+                    $('#montantInput').addClass('is-invalid');
+                    isValid = false;
+                }
+            }
+
+            // Validation champs requis
+            $('input[required]').each(function() {
+                if (!$(this).val().trim()) {
+                    var fieldName = $(this).prev('label').text().replace('*', '').trim();
+                    errors.push(fieldName + ' est requis');
+                    $(this).addClass('is-invalid');
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showErrors(errors);
+            }
+
+            return isValid;
+        }
+
+        function showErrors(errors) {
+            var errorHtml = '<strong>Veuillez corriger les erreurs :</strong><ul class="mb-0 mt-2">';
+            errors.forEach(function(error) {
+                errorHtml += '<li>' + error + '</li>';
+            });
+            errorHtml += '</ul>';
+
+            var errorAlert = $('.alert-danger:first');
+            if (errorAlert.length) {
+                errorAlert.html(errorHtml).show();
+            } else {
+                var alertDiv = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                    errorHtml +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+                    '</div>';
+                $('h1.text-center').after(alertDiv);
+            }
+        }
+
+        function disableSubmitButton() {
+            $('#submitBtn').prop('disabled', true)
+                .html('<i class="fas fa-spinner fa-spin"></i> Création en cours...');
+        }
+
+        function scrollToTop() {
+            $('html, body').animate({ scrollTop: 0 }, 300);
+        }
+
+        function setupErrorCleanup() {
+            $('input').on('input', function() {
+                $(this).removeClass('is-invalid');
+            });
+        }
+    </script>
+}
