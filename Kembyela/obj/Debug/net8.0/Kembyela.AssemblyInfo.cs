@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kembyela")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a6eec28c6cdf9da503a6a9d28c8ba0c6a2a2804")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kembyela")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kembyela")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -87,7 +87,8 @@ namespace Kembyela.Controllers
                 // S'assurer que CreatedAt a une valeur
                 traite.CreatedAt = DateTime.Now;
 
-                // Traiter Aval si vide
+                // MODIFICATION ICI : Traiter Aval si vide (optionnel)
+                // Si l'utilisateur laisse le champ vide, mettre à null
                 if (string.IsNullOrWhiteSpace(traite.Aval))
                 {
                     traite.Aval = null;
@@ -98,6 +99,7 @@ namespace Kembyela.Controllers
                 Console.WriteLine($"ID: {traite.Id}");
                 Console.WriteLine($"MontantEnLettres: {traite.MontantEnLettres}");
                 Console.WriteLine($"CreatedAt: {traite.CreatedAt}");
+                Console.WriteLine($"Aval: {traite.Aval}"); // Vérifier la valeur
 
                 // Sauvegarder dans la base de données
                 _context.Traites.Add(traite);
@@ -132,16 +134,83 @@ namespace Kembyela.Controllers
             }
         }
 
-       
-
         // GET: /Traite/Index
-        public async Task<IActionResult> Index()
+        // GET: /Traite/Index
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var traites = await _context.Traites
-                .OrderByDescending(t => t.CreatedAt)
-                .ToListAsync();
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["EcheanceSortParam"] = sortOrder == "echeance_asc" ? "echeance_desc" : "echeance_asc";
+            ViewData["MontantSortParam"] = sortOrder == "montant_asc" ? "montant_desc" : "montant_asc";
+            ViewData["CurrentFilter"] = searchString;
 
-            return View(traites);
+            var traites = _context.Traites.AsQueryable();
+
+            // Appliquer la recherche si un terme est fourni
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var search = searchString.ToLower();
+                traites = traites.Where(t =>
+                    (!string.IsNullOrEmpty(t.OrdreDe) && t.OrdreDe.ToLower().Contains(search)) ||
+                    (!string.IsNullOrEmpty(t.Payer) && t.Payer.ToLower().Contains(search)) ||
+                    (!string.IsNullOrEmpty(t.Banque) && t.Banque.ToLower().Contains(search))
+                );
+            }
+
+            // Appliquer le tri
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    traites = traites.OrderByDescending(t => t.CreatedAt);
+                    break;
+                case "echeance_asc":
+                    traites = traites.OrderBy(t => t.DateEcheance);
+                    break;
+                case "echeance_desc":
+                    traites = traites.OrderByDescending(t => t.DateEcheance);
+                    break;
+                case "montant_asc":
+                    traites = traites.OrderBy(t => t.Montant);
+                    break;
+                case "montant_desc":
+                    traites = traites.OrderByDescending(t => t.Montant);
+                    break;
+                default: // Tri par défaut : création décroissante
+                    traites = traites.OrderByDescending(t => t.CreatedAt);
+                    break;
+            }
+
+            var traitesList = await traites.ToListAsync();
+
+            // Calculer le nombre de lettres en retard et préparer les données pour la vue
+            int lettresEnRetard = 0;
+            var traitesAvecStatut = new List<object>();
+
+            foreach (var traite in traitesList)
+            {
+                bool estEnRetard = traite.DateEcheance.Date < DateTime.Now.Date;
+
+                if (estEnRetard)
+                {
+                    lettresEnRetard++;
+                }
+
+                // Créer un objet anonyme avec la traite et son statut
+                traitesAvecStatut.Add(new
+                {
+                    Traite = traite,
+                    EstEnRetard = estEnRetard,
+                    JoursRetard = estEnRetard ? (DateTime.Now.Date - traite.DateEcheance.Date).Days : 0
+                });
+            }
+
+            // Passer les informations de recherche à la vue
+            ViewData["SearchCount"] = traitesList.Count;
+            ViewData["TotalCount"] = await _context.Traites.CountAsync();
+            ViewData["LettresEnRetard"] = lettresEnRetard;
+            ViewData["TraitesAvecStatut"] = traitesAvecStatut;
+
+            return View(traitesList);
         }
 
         // GET: /Traite/Delete/id

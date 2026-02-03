@@ -4,23 +4,23 @@
     ViewData["Title"] = "Supprimer Lettre de Change";
 }
 
-<div class="container mt-4">
-    <h1 class="text-center mb-4 text-danger"><i class="fas fa-exclamation-triangle"></i> Supprimer Lettre de Change</h1>
+<div class="container mt-4 kem-delete-container">
+    <h1 class="text-center mb-4 text-danger kem-page-title"><i class="fas fa-exclamation-triangle"></i> Supprimer Lettre de Change</h1>
 
-    <div class="card border-danger">
-        <div class="card-header bg-danger text-white">
+    <div class="card border-danger kem-card kem-card-danger">
+        <div class="card-header bg-danger text-white kem-card-header">
             <h5 class="mb-0">Confirmation de suppression</h5>
         </div>
         <div class="card-body">
-            <h4 class="text-danger">Êtes-vous sûr de vouloir supprimer cette lettre de change ?</h4>
-            <p class="text-muted">Cette action est irréversible. Toutes les données de cette lettre de change seront perdues.</p>
+            <h4 class="text-danger kem-delete-title">Êtes-vous sûr de vouloir supprimer cette lettre de change ?</h4>
+            <p class="text-muted kem-delete-warning">Cette action est irréversible. Toutes les données de cette lettre de change seront perdues.</p>
 
-            <hr>
+            <hr class="kem-divider">
 
-            <h5>Détails de la lettre de change :</h5>
+            <h5 class="kem-details-title">Détails de la lettre de change :</h5>
             <div class="row">
                 <div class="col-md-6">
-                    <dl class="row">
+                    <dl class="row kem-details-list">
                         <dt class="col-sm-4">ID :</dt>
                         <dd class="col-sm-8">@Model.Id</dd>
 
@@ -35,7 +35,7 @@
                     </dl>
                 </div>
                 <div class="col-md-6">
-                    <dl class="row">
+                    <dl class="row kem-details-list">
                         <dt class="col-sm-4">Bénéficiaire :</dt>
                         <dd class="col-sm-8">@Model.OrdreDe</dd>
 
@@ -43,7 +43,7 @@
                         <dd class="col-sm-8">@Model.Payer</dd>
 
                         <dt class="col-sm-4">Montant :</dt>
-                        <dd class="col-sm-8">
+                        <dd class="col-sm-8 kem-amount-highlight">
                             <strong>@Model.GetMontantFormatted()</strong>
                         </dd>
 
@@ -53,18 +53,18 @@
                 </div>
             </div>
 
-            <div class="alert alert-info mt-3">
+            <div class="alert alert-info mt-3 kem-info-alert">
                 <h6><i class="fas fa-info-circle"></i> Montant en lettres :</h6>
                 <p class="mb-0">@Model.MontantEnLettres</p>
             </div>
         </div>
-        <div class="card-footer text-center">
+        <div class="card-footer text-center kem-form-actions">
             <form asp-action="Delete" method="post">
                 <input type="hidden" asp-for="Id" />
-                <button type="submit" class="btn btn-danger btn-lg px-5">
+                <button type="submit" class="btn btn-danger btn-lg px-5 kem-btn kem-btn-danger">
                     <i class="fas fa-trash"></i> Oui, supprimer définitivement
                 </button>
-                <a asp-action="Index" class="btn btn-secondary btn-lg px-5 ms-2">
+                <a asp-action="Index" class="btn btn-secondary btn-lg px-5 ms-2 kem-btn kem-btn-secondary">
                     <i class="fas fa-times"></i> Annuler
                 </a>
             </form>

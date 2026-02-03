@@ -4,13 +4,11 @@
     ViewData["Title"] = "Nouvelle Lettre de Change";
 }
 
-<div class="container mt-4">
-    <h1 class="text-center mb-4">📄 Nouvelle Lettre de Change</h1>
-
+<div class="container mt-4 kem-form-container">
     <!-- Messages d'alerte -->
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show kem-alert" role="alert">
             @TempData["SuccessMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
@@ -18,7 +16,7 @@
 
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show kem-alert" role="alert">
             @TempData["ErrorMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
@@ -30,35 +28,35 @@
 
         <!-- Section 1: Informations de base -->
         <div class="col-12">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow-sm mb-4 kem-card">
+                <div class="card-header kem-card-header bg-primary">
                     <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Informations de base</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label asp-for="DateEdition" class="form-label fw-bold">Date d'édition *</label>
-                            <input asp-for="DateEdition" class="form-control" type="date" required>
+                            <input asp-for="DateEdition" class="form-control kem-form-control" type="date" required>
                             <span asp-validation-for="DateEdition" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-4 mb-3">
                             <label asp-for="DateEcheance" class="form-label fw-bold">Date d'échéance *</label>
-                            <input asp-for="DateEcheance" class="form-control" type="date" required>
+                            <input asp-for="DateEcheance" class="form-control kem-form-control" type="date" required>
                             <span asp-validation-for="DateEcheance" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-4 mb-3">
                             <label asp-for="Ville" class="form-label fw-bold">Ville *</label>
-                            <input asp-for="Ville" class="form-control" placeholder="Ex: Tunis, Sfax..." required>
+                            <input asp-for="Ville" class="form-control kem-form-control" placeholder="Ex: Tunis, Sfax..." required>
                             <span asp-validation-for="Ville" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 mb-3">
                             <label asp-for="RIB" class="form-label fw-bold">RIB (20 chiffres) *</label>
-                            <input asp-for="RIB" class="form-control" id="ribInput"
+                            <input asp-for="RIB" class="form-control kem-form-control" id="ribInput"
                                    placeholder="12345678901234567890" maxlength="20" required>
-                            <div class="form-text">20 chiffres exactement, uniquement des nombres</div>
+                            <div class="form-text kem-form-text">20 chiffres exactement, uniquement des nombres</div>
                             <span asp-validation-for="RIB" class="text-danger small"></span>
                             <div id="ribError" class="text-danger small d-none"></div>
                         </div>
@@ -69,22 +67,22 @@
 
         <!-- Section 2: Montant -->
         <div class="col-12">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
+            <div class="card shadow-sm mb-4 kem-card">
+                <div class="card-header kem-card-header bg-success">
                     <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> Montant</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="Montant" class="form-label fw-bold">Montant *</label>
-                            <div class="input-group">
-                                <input asp-for="Montant" class="form-control" id="montantInput"
+                            <div class="input-group kem-input-group">
+                                <input asp-for="Montant" class="form-control kem-form-control" id="montantInput"
                                        type="text"
                                        placeholder="Ex: 15000 ou 12345,67"
                                        required>
-                                <span class="input-group-text bg-light fw-bold">@Html.DisplayFor(model => model.Monnaie)</span>
+                                <span class="input-group-text kem-input-group-text">@Html.DisplayFor(model => model.Monnaie)</span>
                             </div>
-                            <div class="form-text">
+                            <div class="form-text kem-form-text">
                                 <i class="fas fa-info-circle"></i> Saisissez librement, formatage automatique à la sortie du champ
                             </div>
                             <span asp-validation-for="Montant" class="text-danger small"></span>
@@ -92,7 +90,7 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Montant formaté</label>
-                            <div class="alert alert-light border" id="montantFormatte">
+                            <div class="alert alert-light kem-amount-display" id="montantFormatte">
                                 <strong id="montantDisplay">-</strong>
                             </div>
                         </div>
@@ -103,8 +101,8 @@
 
         <!-- Section 3: Bénéficiaire et paiement -->
         <div class="col-12">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-info text-white">
+            <div class="card shadow-sm mb-4 kem-card">
+                <div class="card-header kem-card-header bg-info">
                     <h5 class="mb-0"><i class="fas fa-users"></i> Bénéficiaire et paiement</h5>
                 </div>
                 <div class="card-body">
@@ -112,13 +110,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label asp-for="OrdreDe" class="form-label fw-bold">À l'ordre de *</label>
-                                <input asp-for="OrdreDe" class="form-control" placeholder="Nom du bénéficiaire" required>
+                                <input asp-for="OrdreDe" class="form-control kem-form-control" placeholder="Nom du bénéficiaire" required>
                                 <span asp-validation-for="OrdreDe" class="text-danger small"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label asp-for="Payer" class="form-label fw-bold">Payer *</label>
-                                <input asp-for="Payer" class="form-control" placeholder="Nom du payeur" required>
+                                <input asp-for="Payer" class="form-control kem-form-control" placeholder="Nom du payeur" required>
                                 <span asp-validation-for="Payer" class="text-danger small"></span>
                             </div>
                         </div>
@@ -126,19 +124,20 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label asp-for="Aval" class="form-label">Aval (optionnel)</label>
-                                <input asp-for="Aval" class="form-control" placeholder="Nom de l'avaliseur">
+                                <input asp-for="Aval" class="form-control kem-form-control" placeholder="Nom de l'avaliseur">
+                                <small class="form-text text-muted kem-form-text">Laisser vide si pas d'aval</small>
                                 <span asp-validation-for="Aval" class="text-danger small"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label asp-for="Banque" class="form-label fw-bold">Banque *</label>
-                                <input asp-for="Banque" class="form-control" placeholder="Nom de la banque" required>
+                                <input asp-for="Banque" class="form-control kem-form-control" placeholder="Nom de la banque" required>
                                 <span asp-validation-for="Banque" class="text-danger small"></span>
                             </div>
                         </div>
 
                         <div class="col-12 mt-3">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch kem-switch">
                                 <input asp-for="Protestable" class="form-check-input" type="checkbox" role="switch" checked>
                                 <label asp-for="Protestable" class="form-check-label fw-bold">
                                     <i class="fas fa-exclamation-triangle"></i> Protestable
@@ -151,11 +150,11 @@
         </div>
 
         <!-- Boutons d'action -->
-        <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-primary btn-lg px-5 me-3" id="submitBtn">
+        <div class="col-12 text-center mt-4 kem-form-actions">
+            <button type="submit" class="btn btn-primary btn-lg px-5 me-3 kem-btn kem-btn-primary" id="submitBtn">
                 <i class="fas fa-file-contract"></i> Générer
             </button>
-            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 kem-btn kem-btn-secondary">
                 <i class="fas fa-list"></i> Voir la liste
             </a>
         </div>
@@ -445,7 +444,7 @@
             if (errorAlert.length) {
                 errorAlert.html(errorHtml).show();
             } else {
-                var alertDiv = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                var alertDiv = '<div class="alert alert-danger alert-dismissible fade show kem-alert" role="alert">' +
                     errorHtml +
                     '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
                     '</div>';

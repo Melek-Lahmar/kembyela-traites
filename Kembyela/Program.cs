@@ -1,5 +1,5 @@
 ﻿using Kembyela.Data;
-using Kembyela.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +12,7 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add PDF Service
-builder.Services.AddScoped<IPdfService, PdfService>();
+
 
 // Add Session
 builder.Services.AddSession(options =>
@@ -57,4 +56,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+//app.Run("http://localhost:5003");
 app.Run();

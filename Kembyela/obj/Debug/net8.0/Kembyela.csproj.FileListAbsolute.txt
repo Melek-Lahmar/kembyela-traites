@@ -8,8 +8,10 @@ C:\Users\MSI\source\repos\Kembyela\Kembyela\obj\Debug\net8.0\Kembyela.MvcApplica
 C:\Users\MSI\source\repos\Kembyela\Kembyela\obj\Debug\net8.0\Kembyela.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\MSI\source\repos\Kembyela\Kembyela\obj\Debug\net8.0\Kembyela.RazorAssemblyInfo.cache
 C:\Users\MSI\source\repos\Kembyela\Kembyela\obj\Debug\net8.0\Kembyela.RazorAssemblyInfo.cs
+C:\Users\MSI\source\repos\Kembyela\Kembyela\obj\Debug\net8.0\Kembyela.sourcelink.json
 C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\appsettings.json
+C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\dotnet-tools.json
 C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\Kembyela.staticwebassets.runtime.json
 C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\Kembyela.staticwebassets.endpoints.json
 C:\Users\MSI\source\repos\Kembyela\Kembyela\bin\Debug\net8.0\Kembyela.exe

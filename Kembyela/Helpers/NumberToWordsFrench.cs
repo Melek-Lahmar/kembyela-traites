@@ -22,14 +22,14 @@ namespace Kembyela.Helpers
                 return "moins " + ConvertToWords(-number);
 
             if (number == 0)
-                return "zéro dinar tunisien";
+                return "zéro dinars";
 
             try
             {
                 long integerPart = (long)Math.Truncate(number);
                 int decimalPart = (int)Math.Round((number - integerPart) * 1000); // Pour les millimes
 
-                string result = ConvertIntegerToWords(integerPart) + " dinar" + (integerPart > 1 ? "s" : "") + " tunisien" + (integerPart > 1 ? "s" : "");
+                string result = ConvertIntegerToWords(integerPart) + " dinar" + (integerPart > 1 ? "s" : "");
 
                 if (decimalPart > 0)
                 {
@@ -68,7 +68,23 @@ namespace Kembyela.Helpers
                 {
                     if (tensDigit == 7 || tensDigit == 9) // soixante-dix, quatre-vingt-dix
                     {
-                        result += "-" + Units[unitsDigit + 10];
+                        // Correction : pour 77 -> "soixante-dix-sept" au lieu de "soixante-dix-dix-sept"
+                        if (unitsDigit == 7)
+                        {
+                            result = tensDigit == 7 ? "soixante-dix-sept" : "quatre-vingt-dix-sept";
+                        }
+                        else if (unitsDigit == 8)
+                        {
+                            result = tensDigit == 7 ? "soixante-dix-huit" : "quatre-vingt-dix-huit";
+                        }
+                        else if (unitsDigit == 9)
+                        {
+                            result = tensDigit == 7 ? "soixante-dix-neuf" : "quatre-vingt-dix-neuf";
+                        }
+                        else
+                        {
+                            result += "-" + Units[unitsDigit + 10];
+                        }
                     }
                     else if (tensDigit == 1) // dix, onze, douze...
                     {

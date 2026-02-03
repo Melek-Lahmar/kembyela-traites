@@ -58,7 +58,7 @@ namespace Kembyela.Models
 
         [Display(Name = "Aval")]
         [StringLength(200, ErrorMessage = "L'aval ne doit pas dépasser 200 caractères")]
-        public string Aval { get; set; }
+        public string? Aval { get; set; }
 
         [Required(ErrorMessage = "La banque est obligatoire")]
         [Display(Name = "Banque")]
@@ -82,7 +82,7 @@ namespace Kembyela.Models
         // Méthode pour vérifier si la date d'échéance est passée
         public bool EstEnRetard()
         {
-            return DateEcheance < DateTime.Today;
+            return DateEcheance.Date < DateTime.Now.Date; 
         }
     }
 }

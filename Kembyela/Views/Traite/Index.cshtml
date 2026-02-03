@@ -2,152 +2,401 @@
 
 @{
     ViewData["Title"] = "Liste des Lettres de Change";
+
+    // Fonction pour déterminer si une lettre est en retard
+    bool EstEnRetard(DateTime dateEcheance)
+    {
+        return dateEcheance.Date < DateTime.Now.Date;
+    }
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1><i class="fas fa-file-invoice"></i> Lettres de Change</h1>
-        <a asp-action="Create" class="btn btn-primary btn-lg">
-            <i class="fas fa-plus-circle"></i> Nouvelle Lettre
-        </a>
-    </div>
-
+<div class="container-fluid px-4 py-4 kem-index-container">
+    <!-- Messages d'alerte -->
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["SuccessMessage"]
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4 kem-alert" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-check-circle me-2"></i>
+                <div>@TempData["SuccessMessage"]</div>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["ErrorMessage"]
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4 kem-alert" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <div>@TempData["ErrorMessage"]</div>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <!-- Statistiques en haut de la page -->
-    @if (Model != null && Model.Any())
-    {
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-5">
-                <div class="card bg-primary text-white mb-3">
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><i class="fas fa-file-contract"></i> Total des Lettres</h5>
-                        <h2 class="card-text display-6">@Model.Count</h2>
-                        <p class="card-text">Lettres de change</p>
+    <!-- Section de recherche et filtres -->
+    <div class="card border-0 shadow-sm mb-5 kem-card kem-search-card">
+        <div class="card-header kem-card-header kem-search-header">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-search me-2"></i>
+                <h5 class="mb-0">Recherche et Filtres</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3">
+                <div class="col-lg-10 col-md-9">
+                    <div class="input-group input-group-lg kem-search-input-group">
+                        <span class="input-group-text kem-search-icon">
+                            <i class="fas fa-search text-primary"></i>
+                        </span>
+                        <input type="text" class="form-control kem-search-input"
+                               name="searchString"
+                               value="@ViewData["CurrentFilter"]"
+                               placeholder="Rechercher par Bénéficiaire, Payeur ou Banque...">
+                        <button type="submit" class="btn btn-primary px-4 kem-btn kem-btn-search">
+                            <i class="fas fa-search me-2"></i>Rechercher
+                        </button>
+                        @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                        {
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 kem-btn kem-btn-clear">
+                                <i class="fas fa-times me-2"></i>Effacer
+                            </a>
+                        }
+                    </div>
+                    <small class="form-text text-muted mt-2 d-flex align-items-center kem-search-help">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Recherche dans: Bénéficiaire (OrdreDe), Payeur (Payer), Banque
+                    </small>
+                </div>
+
+                <div class="col-lg-2 col-md-3">
+                    <div class="input-group input-group-lg kem-sort-input-group">
+                        <span class="input-group-text kem-sort-icon">
+                            <i class="fas fa-sort-amount-down text-primary"></i>
+                        </span>
+                        <select name="sortOrder" class="form-select kem-sort-select" onchange="this.form.submit()">
+                            <option value="">Trier par...</option>
+                            <option value="date_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "date_desc")">Date création ↓</option>
+                            <option value="" selected="@(string.IsNullOrEmpty(ViewData["CurrentSort"]?.ToString()))">Date création ↑</option>
+                            <option value="echeance_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "echeance_asc")">Échéance ↑</option>
+                            <option value="echeance_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "echeance_desc")">Échéance ↓</option>
+                            <option value="montant_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "montant_asc")">Montant ↑</option>
+                            <option value="montant_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "montant_desc")">Montant ↓</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-5">
-                <div class="card bg-success text-white mb-3">
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><i class="fas fa-money-bill-wave"></i> Montant Total</h5>
-                        <h2 class="card-text display-6">@Model.Sum(t => t.Montant).ToString("N3") DT</h2>
-                        <p class="card-text">Valeur totale</p>
+            </form>
+
+            <!-- Résumé de recherche -->
+            @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+            {
+                <div class="mt-4 alert alert-info border-0 shadow-sm kem-search-summary">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-info-circle fa-lg me-3"></i>
+                        <div>
+                            <strong>Résultats de recherche :</strong>
+                            <span class="fw-bold">@ViewData["SearchCount"]</span> lettre(s) trouvée(s)
+                            sur <span class="fw-bold">@ViewData["TotalCount"]</span> au total.
+                            <br>
+                            <small class="text-dark">Terme recherché : "<strong>@ViewData["CurrentFilter"]</strong>"</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row g-4 mb-5 kem-stats-row">
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-total">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="kem-stats-icon">
+                            <i class="fas fa-file-contract fa-2x"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Total Lettres</h6>
+                            <h2 class="mb-0 fw-bold">@ViewData["TotalCount"]</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="fas fa-list"></i> @Model.Count lettre(s) de change</h5>
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-amount">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="kem-stats-icon">
+                            <i class="fas fa-money-bill-wave fa-2x"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Montant Total en DT</h6>
+                            <h2 class="mb-0 fw-bold">@Model.Sum(t => t.Montant).ToString("N3") </h2>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Date Création</th>
-                                <th>Échéance</th>
-                                <th>Bénéficiaire</th>
-                                <th>Montant (DT)</th>
-                                <th>Ville</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var traite in Model.OrderByDescending(t => t.CreatedAt))
-                            {
-                                <tr class="@(traite.EstEnRetard() ? "table-warning" : "")">
-                                    <td>
-                                        <span class="badge bg-secondary">#@traite.Id</span>
-                                    </td>
-                                    <td>
-                                        @traite.CreatedAt.ToString("dd/MM/yyyy")
-                                        <br><small class="text-muted">@traite.CreatedAt.ToString("HH:mm")</small>
-                                    </td>
-                                    <td>
-                                        @traite.DateEcheance.ToString("dd/MM/yyyy")
-                                        @if (traite.EstEnRetard())
+        </div>
+
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-late">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="kem-stats-icon">
+                            <i class="fas fa-exclamation-triangle fa-2x"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">En Retard</h6>
+                            <h2 class="mb-0 fw-bold">@ViewData["LettresEnRetard"]</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-displayed">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="kem-stats-icon">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1">Affiché</h6>
+                            <h2 class="mb-0 fw-bold">@Model.Count</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des lettres de change -->
+    <div class="card border-0 shadow-sm kem-data-card">
+        <div class="card-header kem-card-header kem-data-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0 kem-data-title">
+                        <i class="fas fa-list me-2 text-primary"></i>
+                        @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                        {
+                            <span>Résultats de recherche (@Model.Count)</span>
+                        }
+                        else
+                        {
+                            <span>Toutes les lettres de change (@Model.Count)</span>
+                        }
+                    </h5>
+                    @if (ViewData["LettresEnRetard"] != null && (int)ViewData["LettresEnRetard"] > 0)
+                    {
+                        <span class="badge kem-badge-late">
+                            <i class="fas fa-exclamation-circle me-1"></i>
+                            @ViewData["LettresEnRetard"] en retard
+                        </span>
+                    }
+                </div>
+                <div class="text-muted small kem-sort-info">
+                    <i class="fas fa-sort me-1"></i>
+                    @switch (ViewData["CurrentSort"]?.ToString())
+                    {
+                        case "date_desc":
+                            <span>Tri: Date création ↓</span>
+                            break;
+                        case "echeance_asc":
+                            <span>Tri: Échéance ↑</span>
+                            break;
+                        case "echeance_desc":
+                            <span>Tri: Échéance ↓</span>
+                            break;
+                        case "montant_asc":
+                            <span>Tri: Montant ↑</span>
+                            break;
+                        case "montant_desc":
+                            <span>Tri: Montant ↓</span>
+                            break;
+                        default:
+                            <span>Tri: Date création ↑</span>
+                            break;
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 kem-data-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="py-3 border-bottom">Date Création</th>
+                            <th class="py-3 border-bottom">Échéance</th>
+                            <th class="py-3 border-bottom">Bénéficiaire</th>
+                            <th class="py-3 border-bottom">Montant</th>
+                            <th class="py-3 border-bottom">Ville</th>
+                            <th class="py-3 border-bottom text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var traite in Model)
+                        {
+                            bool estEnRetard = EstEnRetard(traite.DateEcheance);
+                            int joursRetard = estEnRetard ? (DateTime.Now.Date - traite.DateEcheance.Date).Days : 0;
+
+                            <tr class="@(estEnRetard ? "kem-row-late" : "") border-bottom">
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold kem-date">@traite.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                        <small class="text-muted kem-time">
+                                            <i class="fas fa-clock me-1"></i>@traite.CreatedAt.ToString("HH:mm")
+                                        </small>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold kem-date">@traite.DateEcheance.ToString("dd/MM/yyyy")</span>
+                                        @if (estEnRetard)
                                         {
-                                            <br>
-                                            <span class="badge bg-danger">En retard</span>
+                                            <div class="mt-1">
+                                                <span class="badge kem-badge-late-item">
+                                                    <i class="fas fa-exclamation-circle me-1"></i>En retard
+                                                    @if (joursRetard > 0)
+                                                    {
+                                                        <span class="ms-1">(@joursRetard j)</span>
+                                                    }
+                                                </span>
+                                            </div>
                                         }
-                                    </td>
-                                    <td>
-                                        <strong>@traite.OrdreDe</strong>
-                                        <br><small>Payeur: @traite.Payer</small>
-                                    </td>
-                                    <td>
-                                        <span class="fw-bold">@traite.GetMontantFormatted()</span>
-                                        <br><small class="text-muted">@traite.MontantEnLettres.Split(' ').Take(5).Aggregate((a, b) => a + " " + b)...</small>
-                                    </td>
-                                    <td>@traite.Ville</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <!-- Bouton Voir HTML -->
-                                            <a asp-action="Print" asp-route-id="@traite.Id"
-                                               class="btn btn-primary" target="_blank" title="Imprimer PDF Simple">
-                                                <i class="fas fa-print"></i>
-                                            </a>
+                                        else if (traite.DateEcheance.Date == DateTime.Now.Date)
+                                        {
+                                            <div class="mt-1">
+                                                <span class="badge kem-badge-today">
+                                                    <i class="fas fa-calendar-day me-1"></i>Aujourd'hui
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
 
-                                            <!-- Bouton Dupliquer -->
-                                            <button type="button" class="btn btn-warning duplicate-btn"
-                                                    data-id="@traite.Id" title="Dupliquer">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <strong class="text-primary kem-beneficiary">@traite.OrdreDe</strong>
+                                        <small class="text-muted kem-payer">
+                                            <i class="fas fa-user me-1"></i>Payeur: @traite.Payer
+                                        </small>
+                                        @if (!string.IsNullOrEmpty(traite.Aval))
+                                        {
+                                            <small class="text-info mt-1 kem-aval">
+                                                <i class="fas fa-shield-alt me-1"></i>Aval: @traite.Aval
+                                            </small>
+                                        }
+                                    </div>
+                                </td>
 
-                                            <!-- Bouton Supprimer -->
-                                            <a asp-action="Delete" asp-route-id="@traite.Id"
-                                               class="btn btn-danger" title="Supprimer">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold text-success kem-amount">@traite.GetMontantFormatted()</span>
+                                        <small class="text-muted kem-amount-letters"
+                                               title="@traite.MontantEnLettres">
+                                            <i class="fas fa-file-alt me-1"></i>
+                                            @traite.MontantEnLettres.Split(' ').Take(4).Aggregate((a, b) => a + " " + b)...
+                                        </small>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="badge kem-badge-city">
+                                        <i class="fas fa-map-marker-alt me-1"></i>@traite.Ville
+                                    </span>
+                                </td>
+
+                                <td class="pe-4 text-end kem-action-buttons">
+                                    <div class="btn-group shadow-sm kem-btn-group" role="group">
+                                        <a asp-action="Print" asp-route-id="@traite.Id"
+                                           class="btn btn-outline-primary btn-sm px-3 kem-btn-action kem-btn-print"
+                                           target="_blank"
+                                           title="Imprimer PDF">
+                                            <i class="fas fa-print"></i>
+                                        </a>
+
+                                        <button type="button"
+                                                class="btn btn-outline-warning btn-sm px-3 kem-btn-action kem-btn-duplicate duplicate-btn"
+                                                data-id="@traite.Id"
+                                                title="Dupliquer">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+
+                                        <a asp-action="Delete" asp-route-id="@traite.Id"
+                                           class="btn btn-outline-danger btn-sm px-3 kem-btn-action kem-btn-delete"
+                                           title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>Total:</strong> @Model.Count lettre(s)
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <strong>Montant total:</strong> @Model.Sum(t => t.Montant).ToString("N3") DT
+        </div>
+
+        <div class="card-footer kem-data-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted kem-display-info">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        Affiché: <strong>@Model.Count</strong> lettre(s)
+                        @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+                        {
+                            <span class="text-primary ms-2">
+                                (sur <strong>@ViewData["TotalCount"]</strong> au total)
+                            </span>
+                        }
+                    </span>
+                </div>
+                <div class="text-end">
+                    <div class="d-flex flex-column align-items-end">
+                        <span class="fw-bold text-success kem-total-amount">
+                            <i class="fas fa-money-bill-wave me-1"></i>
+                            Montant total: @Model.Sum(t => t.Montant).ToString("N3") DT
+                        </span>
+                        @if (ViewData["LettresEnRetard"] != null && (int)ViewData["LettresEnRetard"] > 0)
+                        {
+                            <small class="text-danger mt-1 kem-late-warning">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                @ViewData["LettresEnRetard"] lettre(s) nécessite(nt) une attention particulière
+                            </small>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    }
-    else
+    </div>
+
+    <!-- Message si aucune lettre -->
+    @if (Model == null || !Model.Any())
     {
-        <div class="text-center py-5">
-            <div class="display-1 text-muted mb-4">
+        <div class="text-center py-5 my-5 kem-empty-state">
+            <div class="kem-empty-icon">
                 <i class="fas fa-file-invoice-dollar"></i>
             </div>
-            <h2 class="text-muted">Aucune lettre de change</h2>
-            <p class="lead">Commencez par créer votre première lettre de change</p>
-            <a asp-action="Create" class="btn btn-primary btn-lg px-5">
-                <i class="fas fa-plus-circle"></i> Créer la première lettre
-            </a>
+            @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+            {
+                <h2 class="text-muted mb-3">Aucun résultat trouvé</h2>
+                <p class="lead text-muted mb-4">Aucune lettre de change ne correspond à "<strong>@ViewData["CurrentFilter"]</strong>"</p>
+                <a asp-action="Index" class="btn btn-outline-primary btn-lg px-5 kem-btn kem-btn-empty">
+                    <i class="fas fa-list me-2"></i>Voir toutes les lettres
+                </a>
+            }
+            else
+            {
+                <h2 class="text-muted mb-3">Aucune lettre de change</h2>
+                <p class="lead text-muted mb-4">Commencez par créer votre première lettre de change</p>
+                <a asp-action="Create" class="btn btn-primary btn-lg px-5 shadow-sm kem-btn kem-btn-empty-primary">
+                    <i class="fas fa-plus-circle me-2"></i>Créer la première lettre
+                </a>
+            }
         </div>
     }
 </div>
@@ -155,70 +404,102 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            // Confirmation de suppression
-            $('.btn-danger').on('click', function(e) {
-                if (!confirm('Êtes-vous sûr de vouloir supprimer cette lettre de change ?')) {
+            // Confirmation de suppression avec message amélioré
+            $('a[href*="Delete"]').on('click', function(e) {
+                if (!confirm('Êtes-vous sûr de vouloir supprimer cette lettre de change ?\nCette action est irréversible.')) {
                     e.preventDefault();
                 }
             });
 
-            // Fonction de duplication
+            // Fonction de duplication avec feedback
             $('.duplicate-btn').on('click', function() {
                 var traiteId = $(this).data('id');
+                var $btn = $(this);
 
-                if (confirm('Voulez-vous dupliquer cette lettre de change ?')) {
+                if (confirm('Voulez-vous dupliquer cette lettre de change ?\nUne copie sera créée avec une nouvelle date de création.')) {
+                    $btn.prop('disabled', true)
+                        .html('<i class="fas fa-spinner fa-spin"></i>');
+
                     $.ajax({
                         url: '@Url.Action("Duplicate", "Traite")',
                         type: 'POST',
                         data: { id: traiteId },
                         success: function(response) {
                             if (response.success) {
-                                alert('Lettre de change dupliquée avec succès!');
-                                window.location.reload();
+                                showToast('success', 'Lettre de change dupliquée avec succès!');
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 1000);
                             } else {
-                                alert('Erreur lors de la duplication: ' + response.message);
+                                showToast('danger', 'Erreur lors de la duplication: ' + response.message);
+                                $btn.prop('disabled', false)
+                                    .html('<i class="fas fa-copy"></i>');
                             }
                         },
                         error: function() {
-                            alert('Erreur lors de la requête.');
+                            showToast('danger', 'Erreur lors de la requête.');
+                            $btn.prop('disabled', false)
+                                .html('<i class="fas fa-copy"></i>');
                         }
                     });
                 }
             });
 
-            // Effets visuels
-            $('.btn-group .btn').hover(
+            // Effets visuels améliorés
+            $('.kem-stats-card').hover(
                 function() {
-                    $(this).addClass('shadow');
-                    $(this).css('transform', 'translateY(-2px)');
+                    $(this).css({
+                        'transform': 'translateY(-5px)',
+                        'transition': 'all 0.3s ease',
+                        'box-shadow': '0 .5rem 1rem rgba(0,0,0,.15)!important'
+                    });
                 },
                 function() {
-                    $(this).removeClass('shadow');
-                    $(this).css('transform', 'translateY(0)');
+                    $(this).css({
+                        'transform': 'translateY(0)',
+                        'box-shadow': '0 .125rem .25rem rgba(0,0,0,.075)!important'
+                    });
                 }
             );
+
+            $('.kem-btn-action').hover(
+                function() {
+                    $(this).css('transform', 'scale(1.05)');
+                },
+                function() {
+                    $(this).css('transform', 'scale(1)');
+                }
+            );
+
+            // Focus sur le champ de recherche
+            @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+            {
+                        <text>
+                        setTimeout(function() {
+                            $('input[name="searchString"]').focus().select();
+                        }, 300);
+                        </text>
+            }
+
+            // Animation des statistiques
+            $('.kem-stats-card .fw-bold').each(function() {
+                var $this = $(this);
+                var countTo = $this.text();
+                if ($.isNumeric(countTo.replace(/[^0-9.-]+/g, ""))) {
+                    $({ countNum: 0 }).animate({
+                        countNum: parseFloat(countTo.replace(/[^0-9.-]+/g, ""))
+                    }, {
+                        duration: 1000,
+                        easing: 'swing',
+                        step: function() {
+                            $this.text(Math.floor(this.countNum).toLocaleString());
+                        },
+                        complete: function() {
+                            $this.text(countTo);
+                        }
+                    });
+                }
+            });
         });
     </script>
-
-    <style>
-        .btn-group .btn {
-            transition: all 0.3s ease;
-            margin-right: 2px;
-        }
-
-        .badge {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-        }
-
-        .table-warning {
-            background-color: #fff3cd;
-        }
-
-        /* Style pour les cartes de statistiques */
-        .card .display-6 {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-    </style>
 }
