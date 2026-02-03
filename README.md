@@ -74,6 +74,8 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 
 ### Impression professionnelle
 <img width="706" height="387" alt="Impression" src="https://github.com/user-attachments/assets/ebc41eaf-0286-4c8d-949d-1971a3cf52e2" />
+![Uploading image.png…]()
+
 
 ---
 
