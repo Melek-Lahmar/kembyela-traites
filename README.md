@@ -4,12 +4,12 @@
 - [Présentation](#-présentation-générale)
 - [Objectifs](#-objectifs-du-projet)
 - [Fonctionnalités](#-fonctionnalités-principales)
-- [Captures d’écran](#-captures-décran)
+- [Captures d’écran](#-captures-d%E2%80%99%C3%A9cran)
 - [Avantages](#-avantages-clés)
-- [Compatibilité](#️-compatibilité-technique)
+- [Compatibilité](#-compatibilité-technique)
 - [Licence](#-licence-et-modèle-commercial)
 - [Succès commercial](#-adoption-et-succès-commercial)
-- [Architecture](#️-architecture-du-projet)
+- [Architecture](#-architecture-du-projet)
 - [Installation](#-installation-et-déploiement)
 - [Support](#-support)
 
@@ -61,23 +61,19 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 
 ## 🖼️ Captures d’écran
 
-> Les captures doivent être placées dans le dossier :  
-> `/docs/screenshots/`
+> Les captures doivent être placées dans le dossier : `/docs/screenshots/`
 
 ### Tableau de bord
-<img width="1297" height="825" alt="image" src="https://github.com/user-attachments/assets/9b764903-1a95-4909-b3a3-3e29fb3f9d11" />
-
+<img width="1297" height="825" alt="Dashboard" src="https://github.com/user-attachments/assets/9b764903-1a95-4909-b3a3-3e29fb3f9d11" />
 
 ### Création d’une lettre de change
-<img width="862" height="873" alt="image" src="https://github.com/user-attachments/assets/8c5b239c-98c7-4297-861a-85bdf7a649de" />
-
+<img width="862" height="873" alt="Création Traite" src="https://github.com/user-attachments/assets/8c5b239c-98c7-4297-861a-85bdf7a649de" />
 
 ### Liste et suivi des traites
-<img width="430" height="577" alt="image" src="https://github.com/user-attachments/assets/d536e127-022a-4093-a0ce-14850bd70b4d" />
+<img width="430" height="577" alt="Liste Traites" src="https://github.com/user-attachments/assets/d536e127-022a-4093-a0ce-14850bd70b4d" />
 
 ### Impression professionnelle
-<img width="706" height="387" alt="image" src="https://github.com/user-attachments/assets/ebc41eaf-0286-4c8d-949d-1971a3cf52e2" />
-
+<img width="706" height="387" alt="Impression" src="https://github.com/user-attachments/assets/ebc41eaf-0286-4c8d-949d-1971a3cf52e2" />
 
 ---
 
@@ -93,11 +89,11 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 
 ## 🖥️ Compatibilité technique
 
-- **Systèmes d’exploitation** :
+- **Systèmes d’exploitation :**
   - Windows 10
   - Windows 11
 
-- **Technologies utilisées** :
+- **Technologies utilisées :**
   - ASP.NET Core MVC
   - Entity Framework Core
   - SQL Server
@@ -108,10 +104,10 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 
 ## 🔐 Licence et modèle commercial
 
-- ✅ Licence à vie
-- ❌ Aucun abonnement
-- ❌ Aucun frais mensuel
-- 💳 Paiement unique
+- ✅ Licence à vie  
+- ❌ Aucun abonnement  
+- ❌ Aucun frais mensuel  
+- 💳 Paiement unique  
 
 La licence inclut :
 - Installation du logiciel
@@ -122,33 +118,29 @@ La licence inclut :
 
 ## 📊 Adoption et succès commercial
 
-La solution **Kembyela.tn** a connu un réel succès commercial :
-
-- ✔️ Plus de **100 licences vendues**
-- ✔️ Utilisée par plus de **100 entreprises et clients**
-- ✔️ Adoptée par des **personnes morales et physiques**
-
-Ce taux d’adoption confirme la fiabilité et la valeur métier de la solution.
+- ✔️ Plus de **100 licences vendues**  
+- ✔️ Utilisée par plus de **100 entreprises et clients**  
+- ✔️ Clients **personnes morales et physiques**  
 
 ---
 
 ## 🏗️ Architecture du projet
 
-- Application Web ASP.NET Core MVC
-- Base de données SQL Server
-- Architecture en couches :
-  - Controllers
-  - Models
-  - Views
-  - Services
-  - Data Access Layer
+- Application Web ASP.NET Core MVC  
+- Base de données SQL Server  
+- Architecture en couches :  
+  - Controllers  
+  - Models  
+  - Views  
+  - Services  
+  - Data Access Layer  
 
 ---
 
 ## ⚙️ Installation et déploiement
 
 ### 🔹 Prérequis
-- Windows 10 ou Windows 11
+- Windows 10 / Windows 11
 - .NET 6 ou .NET 7 Runtime
 - SQL Server (LocalDB / Express / Standard)
 - IIS (pour déploiement serveur)
@@ -156,17 +148,57 @@ Ce taux d’adoption confirme la fiabilité et la valeur métier de la solution.
 ---
 
 ### 🔹 Étape 1 : Cloner le projet
+``bash
 git clone https://github.com/Melek-Lahmar/kembyela-traites.git
-### 🔹 Étape 2 : Configuration de la base de données
-
+🔹 Étape 2 : Configurer la base de données
 Modifier le fichier appsettings.json :
 
 "ConnectionStrings": {
   "DefaultConnection": "Server=.;Database=KembyelaDB;Trusted_Connection=True;"
 }
-Puis exécuter les migrations :
+Puis appliquer les migrations :
 
 dotnet ef database update
-### 🔹 Étape 3 : Lancer l’application en local
+🔹 Étape 3 : Lancer l’application en local
 dotnet restore
 dotnet run
+Accéder à l’application :
+
+https://localhost:5001
+🔹 Étape 4 : Déploiement sur IIS
+Publier le projet depuis Visual Studio
+
+Copier les fichiers générés sur le serveur
+
+Créer un site IIS
+
+Configurer la connexion SQL
+
+Démarrer le site
+
+🔹 Étape 5 : Installation pour le client
+Installation sur poste Windows
+
+Création d’un raccourci bureau
+
+Formation utilisateur incluse
+
+Assistance technique assurée
+
+📞 Support
+LinkedIn: Melek Lahmar
+
+Email: lahmarmelek67@gmail.com
+
+GitHub: github.com/Melek-Lahmar
+
+👨‍💻 Auteur
+Développé par Melek Lahmar
+© Kembyela.tn – Tous droits réservés
+
+
+---
+
+Si tu veux, je peux maintenant te faire **une version encore plus “pro commerciale”**, avec des **badges GitHub**, **tableau résumé des fonctionnalités**, et **README prêt pour client ou PFE**.  
+
+Veux‑tu que je fasse ça ?
