@@ -65,16 +65,19 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 > `/docs/screenshots/`
 
 ### Tableau de bord
-![Dashboard](docs/screenshots/dashboard.png)
+<img width="1297" height="825" alt="image" src="https://github.com/user-attachments/assets/9b764903-1a95-4909-b3a3-3e29fb3f9d11" />
+
 
 ### Création d’une lettre de change
-![Création Traite](docs/screenshots/traite-create.png)
+<img width="862" height="873" alt="image" src="https://github.com/user-attachments/assets/8c5b239c-98c7-4297-861a-85bdf7a649de" />
+
 
 ### Liste et suivi des traites
-![Liste Traites](docs/screenshots/traite-list.png)
+<img width="430" height="577" alt="image" src="https://github.com/user-attachments/assets/d536e127-022a-4093-a0ce-14850bd70b4d" />
 
 ### Impression professionnelle
-![Impression](docs/screenshots/print.png)
+<img width="706" height="387" alt="image" src="https://github.com/user-attachments/assets/ebc41eaf-0286-4c8d-949d-1971a3cf52e2" />
+
 
 ---
 
