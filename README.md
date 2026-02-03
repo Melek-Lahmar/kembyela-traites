@@ -200,6 +200,6 @@ Développé par Melek Lahmar
 
 ---
 
-Si tu veux, je peux maintenant te faire **une version encore plus “pro commerciale”**, avec des **badges GitHub**, **tableau résumé des fonctionnalités**, et **README prêt pour client ou PFE**.  
+Si tu veux, je peux maintenant te faire **une version encore plus “pro commerciale”**, avec des **badges GitHub**, **tableau résumé des fonctionnalités**, et **README prêt pour client ou entreprises**.  
 
 Veux‑tu que je fasse ça ?
