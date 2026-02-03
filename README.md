@@ -152,7 +152,7 @@ La licence inclut :
 ---
 
 ### 🔹 Étape 1 : Cloner le projet
-``bash
+bash
 git clone https://github.com/Melek-Lahmar/kembyela-traites.git
 
 ###🔹 Étape 2 : Configurer la base de données
