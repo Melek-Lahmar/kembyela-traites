@@ -73,8 +73,9 @@ Développée avec **ASP.NET Core MVC** et **SQL Server**, la solution est destin
 <img width="430" height="577" alt="Liste Traites" src="https://github.com/user-attachments/assets/d536e127-022a-4093-a0ce-14850bd70b4d" />
 
 ### Impression professionnelle
-<img width="706" height="387" alt="Impression" src="https://github.com/user-attachments/assets/ebc41eaf-0286-4c8d-949d-1971a3cf52e2" />
-<img width="902" height="581" alt="image" src="https://github.com/user-attachments/assets/1b8a6fa4-eee6-453a-8df7-6f43af144195" />
+<img width="882" height="575" alt="image" src="https://github.com/user-attachments/assets/2d7e00d9-663b-4fef-90cf-4ea5ef72ed17" />
+<img width="1143" height="748" alt="image" src="https://github.com/user-attachments/assets/295bdf73-5462-48c1-86a5-450f0bfbdd0c" />
+
 
 
 
