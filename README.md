@@ -154,6 +154,7 @@ La licence inclut :
 ### 🔹 Étape 1 : Cloner le projet
 ``bash
 git clone https://github.com/Melek-Lahmar/kembyela-traites.git
+
 ###🔹 Étape 2 : Configurer la base de données
 Modifier le fichier appsettings.json :
 
@@ -161,23 +162,19 @@ Modifier le fichier appsettings.json :
   "DefaultConnection": "Server=.;Database=KembyelaDB;Trusted_Connection=True;"
 }
 Puis appliquer les migrations :
-
 dotnet ef database update
+
 ###🔹 Étape 3 : Lancer l’application en local
 dotnet restore
 dotnet run
 Accéder à l’application :
-
 https://localhost:5001
+
 ###🔹 Étape 4 : Déploiement sur IIS
 Publier le projet depuis Visual Studio
-
 Copier les fichiers générés sur le serveur
-
 Créer un site IIS
-
 Configurer la connexion SQL
-
 Démarrer le site
 
 ###🔹 Étape 5 : Installation pour le client
