@@ -8,6 +8,10 @@
     {
         return dateEcheance.Date < DateTime.Now.Date;
     }
+
+    // Compter les lettres payées
+    int lettresPayees = Model?.Count(t => t.EstPayee) ?? 0;
+    int lettresEnAttente = Model?.Count(t => !t.EstPayee && !EstEnRetard(t.DateEcheance)) ?? 0;
 }
 
 <div class="container-fluid px-4 py-4 kem-index-container">
@@ -82,6 +86,8 @@
                             <option value="echeance_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "echeance_desc")">Échéance ↓</option>
                             <option value="montant_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "montant_asc")">Montant ↑</option>
                             <option value="montant_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "montant_desc")">Montant ↓</option>
+                            <option value="paye" selected="@(ViewData["CurrentSort"]?.ToString() == "paye")">Payées</option>
+                            <option value="nonpaye" selected="@(ViewData["CurrentSort"]?.ToString() == "nonpaye")">Non payées</option>
                         </select>
                     </div>
                 </div>
@@ -125,15 +131,15 @@
         </div>
 
         <div class="col-xl-3 col-lg-6">
-            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-amount">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-paid">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="kem-stats-icon">
-                            <i class="fas fa-money-bill-wave fa-2x"></i>
+                            <i class="fas fa-check-circle fa-2x"></i>
                         </div>
                         <div>
-                            <h6 class="text-muted mb-1">Montant Total en DT</h6>
-                            <h2 class="mb-0 fw-bold">@Model.Sum(t => t.Montant).ToString("N3") </h2>
+                            <h6 class="text-muted mb-1">Payées</h6>
+                            <h2 class="mb-0 fw-bold">@lettresPayees</h2>
                         </div>
                     </div>
                 </div>
@@ -157,15 +163,15 @@
         </div>
 
         <div class="col-xl-3 col-lg-6">
-            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-displayed">
+            <div class="card border-0 shadow-sm h-100 kem-stats-card kem-stats-pending">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="kem-stats-icon">
-                            <i class="fas fa-chart-line fa-2x"></i>
+                            <i class="fas fa-clock fa-2x"></i>
                         </div>
                         <div>
-                            <h6 class="text-muted mb-1">Affiché</h6>
-                            <h2 class="mb-0 fw-bold">@Model.Count</h2>
+                            <h6 class="text-muted mb-1">En Attente</h6>
+                            <h2 class="mb-0 fw-bold">@lettresEnAttente</h2>
                         </div>
                     </div>
                 </div>
@@ -196,6 +202,14 @@
                             @ViewData["LettresEnRetard"] en retard
                         </span>
                     }
+
+                    @if (lettresPayees > 0)
+                    {
+                        <span class="badge kem-badge-paid ms-2">
+                            <i class="fas fa-check-circle me-1"></i>
+                            @lettresPayees payée(s)
+                        </span>
+                    }
                 </div>
                 <div class="text-muted small kem-sort-info">
                     <i class="fas fa-sort me-1"></i>
@@ -216,6 +230,12 @@
                         case "montant_desc":
                             <span>Tri: Montant ↓</span>
                             break;
+                        case "paye":
+                            <span>Tri: Payées</span>
+                            break;
+                        case "nonpaye":
+                            <span>Tri: Non payées</span>
+                            break;
                         default:
                             <span>Tri: Date création ↑</span>
                             break;
@@ -229,6 +249,7 @@
                 <table class="table table-hover align-middle mb-0 kem-data-table">
                     <thead class="table-light">
                         <tr>
+                            <th class="py-3 border-bottom">Statut</th>
                             <th class="py-3 border-bottom">Date Création</th>
                             <th class="py-3 border-bottom">Échéance</th>
                             <th class="py-3 border-bottom">Bénéficiaire</th>
@@ -242,8 +263,65 @@
                         {
                             bool estEnRetard = EstEnRetard(traite.DateEcheance);
                             int joursRetard = estEnRetard ? (DateTime.Now.Date - traite.DateEcheance.Date).Days : 0;
+                            int joursRestants = !estEnRetard ? (traite.DateEcheance.Date - DateTime.Now.Date).Days : 0;
 
-                            <tr class="@(estEnRetard ? "kem-row-late" : "") border-bottom">
+                            <tr class="@(estEnRetard && !traite.EstPayee ? "kem-row-late" : "")
+                                              @(traite.EstPayee ? "kem-row-paid" : "") border-bottom">
+
+                                <!-- Colonne Statut -->
+                                <td class="align-middle">
+                                    <div class="d-flex flex-column">
+                                        @if (traite.EstPayee)
+                                        {
+                                            <span class="badge kem-badge-paid-full mb-1">
+                                                <i class="fas fa-check-circle me-1"></i>Payée
+                                            </span>
+                                            <small class="text-success kem-payment-date">
+                                                <i class="fas fa-calendar-check me-1"></i>
+                                                Paiement confirmé
+                                            </small>
+                                        }
+                                        else if (estEnRetard)
+                                        {
+                                            <span class="badge kem-badge-late-full mb-1">
+                                                <i class="fas fa-exclamation-circle me-1"></i>En retard
+                                                @if (joursRetard > 0)
+                                                {
+                                                    <span class="ms-1">(@joursRetard j)</span>
+                                                }
+                                            </span>
+                                            <small class="text-danger kem-late-warning">
+                                                <i class="fas fa-clock me-1"></i>
+                                                Délai dépassé
+                                            </small>
+                                        }
+                                        else if (traite.DateEcheance.Date == DateTime.Now.Date)
+                                        {
+                                            <span class="badge kem-badge-today mb-1">
+                                                <i class="fas fa-calendar-day me-1"></i>Échéance aujourd'hui
+                                            </span>
+                                            <small class="text-warning kem-today-warning">
+                                                <i class="fas fa-exclamation me-1"></i>
+                                                À régler
+                                            </small>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge kem-badge-pending mb-1">
+                                                <i class="fas fa-clock me-1"></i>En attente
+                                            </span>
+                                            @if (joursRestants > 0)
+                                            {
+                                                <small class="text-info kem-days-left">
+                                                    <i class="fas fa-calendar-alt me-1"></i>
+                                                    @joursRestants jour(s) restant(s)
+                                                </small>
+                                            }
+                                        }
+                                    </div>
+                                </td>
+
+                                <!-- Colonne Date de création -->
                                 <td>
                                     <div class="d-flex flex-column">
                                         <span class="fw-bold kem-date">@traite.CreatedAt.ToString("dd/MM/yyyy")</span>
@@ -253,32 +331,14 @@
                                     </div>
                                 </td>
 
+                                <!-- Colonne Échéance -->
                                 <td>
                                     <div class="d-flex flex-column">
                                         <span class="fw-bold kem-date">@traite.DateEcheance.ToString("dd/MM/yyyy")</span>
-                                        @if (estEnRetard)
-                                        {
-                                            <div class="mt-1">
-                                                <span class="badge kem-badge-late-item">
-                                                    <i class="fas fa-exclamation-circle me-1"></i>En retard
-                                                    @if (joursRetard > 0)
-                                                    {
-                                                        <span class="ms-1">(@joursRetard j)</span>
-                                                    }
-                                                </span>
-                                            </div>
-                                        }
-                                        else if (traite.DateEcheance.Date == DateTime.Now.Date)
-                                        {
-                                            <div class="mt-1">
-                                                <span class="badge kem-badge-today">
-                                                    <i class="fas fa-calendar-day me-1"></i>Aujourd'hui
-                                                </span>
-                                            </div>
-                                        }
                                     </div>
                                 </td>
 
+                                <!-- Colonne Bénéficiaire -->
                                 <td>
                                     <div class="d-flex flex-column">
                                         <strong class="text-primary kem-beneficiary">@traite.OrdreDe</strong>
@@ -294,25 +354,59 @@
                                     </div>
                                 </td>
 
+                                <!-- Colonne Montant -->
                                 <td>
                                     <div class="d-flex flex-column">
                                         <span class="fw-bold text-success kem-amount">@traite.GetMontantFormatted()</span>
                                         <small class="text-muted kem-amount-letters"
                                                title="@traite.MontantEnLettres">
                                             <i class="fas fa-file-alt me-1"></i>
-                                            @traite.MontantEnLettres.Split(' ').Take(4).Aggregate((a, b) => a + " " + b)...
+                                            @{
+                                                var mots = traite.MontantEnLettres.Split(' ');
+                                                var apercu = mots.Length > 4 ? string.Join(" ", mots.Take(4)) + "..." : traite.MontantEnLettres;
+                                            }
+                                            @apercu
                                         </small>
                                     </div>
                                 </td>
 
+                                <!-- Colonne Ville -->
                                 <td>
                                     <span class="badge kem-badge-city">
                                         <i class="fas fa-map-marker-alt me-1"></i>@traite.Ville
                                     </span>
                                 </td>
 
+                                <!-- Colonne Actions -->
                                 <td class="pe-4 text-end kem-action-buttons">
                                     <div class="btn-group shadow-sm kem-btn-group" role="group">
+                                        <!-- Solution SIMPLE avec formulaire POST -->
+                                        @if (!traite.EstPayee)
+                                        {
+                                            <form method="post" action="@Url.Action("MarquerCommePayee", "Traite")" style="display:inline;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@traite.Id" />
+                                                <button type="submit" class="btn btn-success btn-sm px-3 kem-btn-action kem-btn-pay"
+                                                        title="Marquer comme payée"
+                                                        onclick="return confirm('Voulez-vous marquer cette lettre comme payée ?')">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" action="@Url.Action("MarquerCommeNonPayee", "Traite")" style="display:inline;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@traite.Id" />
+                                                <button type="submit" class="btn btn-warning btn-sm px-3 kem-btn-action kem-btn-unpay"
+                                                        title="Marquer comme non payée"
+                                                        onclick="return confirm('Voulez-vous marquer cette lettre comme non payée ?')">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        }
+
+                                        <!-- Bouton Imprimer -->
                                         <a asp-action="Print" asp-route-id="@traite.Id"
                                            class="btn btn-outline-primary btn-sm px-3 kem-btn-action kem-btn-print"
                                            target="_blank"
@@ -320,13 +414,18 @@
                                             <i class="fas fa-print"></i>
                                         </a>
 
-                                        <button type="button"
-                                                class="btn btn-outline-warning btn-sm px-3 kem-btn-action kem-btn-duplicate duplicate-btn"
-                                                data-id="@traite.Id"
-                                                title="Dupliquer">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
+                                        <!-- Bouton Dupliquer -->
+                                        <form method="post" action="@Url.Action("Duplicate", "Traite")" style="display:inline;">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@traite.Id" />
+                                            <button type="submit" class="btn btn-outline-warning btn-sm px-3 kem-btn-action kem-btn-duplicate"
+                                                    title="Dupliquer"
+                                                    onclick="return confirm('Voulez-vous dupliquer cette lettre de change ?')">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </form>
 
+                                        <!-- Bouton Supprimer -->
                                         <a asp-action="Delete" asp-route-id="@traite.Id"
                                            class="btn btn-outline-danger btn-sm px-3 kem-btn-action kem-btn-delete"
                                            title="Supprimer">
@@ -354,6 +453,23 @@
                             </span>
                         }
                     </span>
+                    <div class="mt-1">
+                        <span class="badge kem-badge-paid-full me-2">
+                            <i class="fas fa-check-circle me-1"></i>
+                            Payées: @lettresPayees
+                        </span>
+                        <span class="badge kem-badge-pending me-2">
+                            <i class="fas fa-clock me-1"></i>
+                            En attente: @lettresEnAttente
+                        </span>
+                        @if (ViewData["LettresEnRetard"] != null && (int)ViewData["LettresEnRetard"] > 0)
+                        {
+                            <span class="badge kem-badge-late-full">
+                                <i class="fas fa-exclamation-circle me-1"></i>
+                                En retard: @ViewData["LettresEnRetard"]
+                            </span>
+                        }
+                    </div>
                 </div>
                 <div class="text-end">
                     <div class="d-flex flex-column align-items-end">
@@ -361,6 +477,13 @@
                             <i class="fas fa-money-bill-wave me-1"></i>
                             Montant total: @Model.Sum(t => t.Montant).ToString("N3") DT
                         </span>
+                        @{
+                            decimal montantPaye = Model.Where(t => t.EstPayee).Sum(t => t.Montant);
+                        }
+                        <small class="text-success mt-1 kem-paid-amount">
+                            <i class="fas fa-check-circle me-1"></i>
+                            Montant payé: @montantPaye.ToString("N3") DT
+                        </small>
                         @if (ViewData["LettresEnRetard"] != null && (int)ViewData["LettresEnRetard"] > 0)
                         {
                             <small class="text-danger mt-1 kem-late-warning">
@@ -404,64 +527,7 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            // Confirmation de suppression avec message amélioré
-            $('a[href*="Delete"]').on('click', function(e) {
-                if (!confirm('Êtes-vous sûr de vouloir supprimer cette lettre de change ?\nCette action est irréversible.')) {
-                    e.preventDefault();
-                }
-            });
-
-            // Fonction de duplication avec feedback
-            $('.duplicate-btn').on('click', function() {
-                var traiteId = $(this).data('id');
-                var $btn = $(this);
-
-                if (confirm('Voulez-vous dupliquer cette lettre de change ?\nUne copie sera créée avec une nouvelle date de création.')) {
-                    $btn.prop('disabled', true)
-                        .html('<i class="fas fa-spinner fa-spin"></i>');
-
-                    $.ajax({
-                        url: '@Url.Action("Duplicate", "Traite")',
-                        type: 'POST',
-                        data: { id: traiteId },
-                        success: function(response) {
-                            if (response.success) {
-                                showToast('success', 'Lettre de change dupliquée avec succès!');
-                                setTimeout(function() {
-                                    window.location.reload();
-                                }, 1000);
-                            } else {
-                                showToast('danger', 'Erreur lors de la duplication: ' + response.message);
-                                $btn.prop('disabled', false)
-                                    .html('<i class="fas fa-copy"></i>');
-                            }
-                        },
-                        error: function() {
-                            showToast('danger', 'Erreur lors de la requête.');
-                            $btn.prop('disabled', false)
-                                .html('<i class="fas fa-copy"></i>');
-                        }
-                    });
-                }
-            });
-
-            // Effets visuels améliorés
-            $('.kem-stats-card').hover(
-                function() {
-                    $(this).css({
-                        'transform': 'translateY(-5px)',
-                        'transition': 'all 0.3s ease',
-                        'box-shadow': '0 .5rem 1rem rgba(0,0,0,.15)!important'
-                    });
-                },
-                function() {
-                    $(this).css({
-                        'transform': 'translateY(0)',
-                        'box-shadow': '0 .125rem .25rem rgba(0,0,0,.075)!important'
-                    });
-                }
-            );
-
+            // Style pour les boutons
             $('.kem-btn-action').hover(
                 function() {
                     $(this).css('transform', 'scale(1.05)');
@@ -474,32 +540,113 @@
             // Focus sur le champ de recherche
             @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
             {
-                        <text>
-                        setTimeout(function() {
-                            $('input[name="searchString"]').focus().select();
-                        }, 300);
-                        </text>
+                    <text>
+                    setTimeout(function() {
+                        $('input[name="searchString"]').focus().select();
+                    }, 300);
+                    </text>
             }
-
-            // Animation des statistiques
-            $('.kem-stats-card .fw-bold').each(function() {
-                var $this = $(this);
-                var countTo = $this.text();
-                if ($.isNumeric(countTo.replace(/[^0-9.-]+/g, ""))) {
-                    $({ countNum: 0 }).animate({
-                        countNum: parseFloat(countTo.replace(/[^0-9.-]+/g, ""))
-                    }, {
-                        duration: 1000,
-                        easing: 'swing',
-                        step: function() {
-                            $this.text(Math.floor(this.countNum).toLocaleString());
-                        },
-                        complete: function() {
-                            $this.text(countTo);
-                        }
-                    });
-                }
-            });
         });
     </script>
 }
+
+<style>
+    /* Styles pour les badges de statut */
+    .kem-badge-paid-full {
+        background-color: #28a745;
+        color: white;
+        padding: 0.35em 0.65em;
+    }
+
+    .kem-badge-pending {
+        background-color: #6c757d;
+        color: white;
+        padding: 0.35em 0.65em;
+    }
+
+    .kem-badge-late-full {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.35em 0.65em;
+    }
+
+    .kem-badge-today {
+        background-color: #ffc107;
+        color: #212529;
+        padding: 0.35em 0.65em;
+    }
+
+    /* Styles pour les lignes du tableau */
+    .kem-row-paid {
+        background-color: rgba(40, 167, 69, 0.05);
+    }
+
+    .kem-row-late {
+        background-color: rgba(220, 53, 69, 0.05);
+    }
+
+    /* Styles pour les boutons */
+    .kem-btn-pay {
+        background-color: #28a745;
+        color: white;
+        border: none;
+    }
+
+        .kem-btn-pay:hover {
+            background-color: #218838;
+            color: white;
+        }
+
+    .kem-btn-unpay {
+        background-color: #ffc107;
+        color: #212529;
+        border: none;
+    }
+
+        .kem-btn-unpay:hover {
+            background-color: #e0a800;
+            color: #212529;
+        }
+
+    /* Badges dans le header */
+    .kem-badge-paid {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .kem-badge-late {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Informations de paiement */
+    .kem-payment-date {
+        font-size: 0.75rem;
+    }
+
+    .kem-late-warning {
+        font-size: 0.75rem;
+    }
+
+    .kem-today-warning {
+        font-size: 0.75rem;
+    }
+
+    .kem-days-left {
+        font-size: 0.75rem;
+    }
+
+    /* Montants payés */
+    .kem-paid-amount {
+        font-size: 0.875rem;
+    }
+
+    /* Cartes de statistiques */
+    .kem-stats-paid {
+        border-left: 4px solid #28a745 !important;
+    }
+
+    .kem-stats-pending {
+        border-left: 4px solid #6c757d !important;
+    }
+</style>

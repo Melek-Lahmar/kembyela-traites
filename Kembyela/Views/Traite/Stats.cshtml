@@ -1,0 +1,235 @@
+﻿@model List<Kembyela.Models.Traite>
+
+@{
+    ViewData["Title"] = "Statistiques Lettres de Change";
+
+    bool EstEnRetard(DateTime d) => d.Date < DateTime.Now.Date;
+
+    int total = Model.Count;
+    int payees = Model.Count(t => t.EstPayee);
+    int enRetard = Model.Count(t => !t.EstPayee && EstEnRetard(t.DateEcheance));
+    int enAttente = total - payees - enRetard;
+
+    decimal montantTotal = Model.Sum(t => t.Montant);
+    decimal montantPaye = Model.Where(t => t.EstPayee).Sum(t => t.Montant);
+    decimal montantRetard = Model.Where(t => !t.EstPayee && EstEnRetard(t.DateEcheance)).Sum(t => t.Montant);
+    decimal montantAttente = montantTotal - montantPaye;
+
+    decimal montantMoyen = total > 0 ? montantTotal / total : 0;
+    decimal montantMoyenPaye = payees > 0 ? montantPaye / payees : 0;
+    decimal montantMoyenRetard = enRetard > 0 ? montantRetard / enRetard : 0;
+
+    double pctPayees = total > 0 ? (double)payees / total * 100 : 0;
+    double pctRetard = total > 0 ? (double)enRetard / total * 100 : 0;
+    double pctAttente = total > 0 ? (double)enAttente / total * 100 : 0;
+
+    var lettresParMois = Model
+        .GroupBy(t => new { t.DateEcheance.Year, t.DateEcheance.Month })
+        .Select(g => new { Mois = g.Key, Count = g.Count(), Montant = g.Sum(x => x.Montant) })
+        .OrderBy(x => x.Mois.Year).ThenBy(x => x.Mois.Month)
+        .ToList();
+}
+
+<div class="container mt-4 kem-form-container">
+
+    <!-- TITRE -->
+   
+    <div class="card border-0 shadow-sm mb-5 kem-card kem-search-card">
+        <div class="card-header kem-card-header kem-search-header">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                <h4 class="mb-0">Tableau de bord – Lettres de Change</h4>
+            </div>
+        </div>
+       
+            
+    </div>
+    <!-- CARTES KPI PRINCIPALES -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Lettres</h6>
+                    <h2 class="fw-bold">@total</h2>
+                    <small>@total Lettres</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="text-white">Payées</h6>
+                    <h2 class="fw-bold">@payees</h2>
+                    <small>@montantPaye.ToString("N3") DT</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-danger text-white">
+                <div class="card-body">
+                    <h6 class="text-white">En Retard</h6>
+                    <h2 class="fw-bold">@enRetard</h2>
+                    <small>@montantRetard.ToString("N3") DT</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-warning text-dark">
+                <div class="card-body">
+                    <h6>En Attente</h6>
+                    <h2 class="fw-bold">@enAttente</h2>
+                    <small>@montantAttente.ToString("N3") DT</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARTES KPI SUPPLÉMENTAIRES -->
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-secondary text-white">
+                <div class="card-body">
+                    <h6>Montant moyen par lettre</h6>
+                    <h2 class="fw-bold">@montantMoyen.ToString("N3") DT</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-success text-white">
+                <div class="card-body">
+                    <h6>Lettres payées (%)</h6>
+                    <h2 class="fw-bold">@pctPayees.ToString("N1") %</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-danger text-white">
+                <div class="card-body">
+                    <h6>En retard (%)</h6>
+                    <h2 class="fw-bold">@pctRetard.ToString("N1") %</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm kem-card bg-warning text-dark">
+                <div class="card-body">
+                    <h6>En attente (%)</h6>
+                    <h2 class="fw-bold">@pctAttente.ToString("N1") %</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INDICATEURS FINANCIERS -->
+    <div class="card shadow-sm mb-5 kem-card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Indicateurs Financiers</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">💰 Montant total émis <strong class="float-end">@montantTotal.ToString("N3") DT</strong></li>
+                <li class="list-group-item text-success">✅ Montant encaissé <strong class="float-end">@montantPaye.ToString("N3") DT</strong></li>
+                <li class="list-group-item text-danger">⚠️ Montant en retard <strong class="float-end">@montantRetard.ToString("N3") DT</strong></li>
+                <li class="list-group-item text-warning">⏳ Montant restant <strong class="float-end">@montantAttente.ToString("N3") DT</strong></li>
+                <li class="list-group-item">📊 Montant moyen par lettre <strong class="float-end">@montantMoyen.ToString("N3") DT</strong></li>
+                <li class="list-group-item text-success">📈 Montant moyen payé <strong class="float-end">@montantMoyenPaye.ToString("N3") DT</strong></li>
+                <li class="list-group-item text-danger">📉 Montant moyen retard <strong class="float-end">@montantMoyenRetard.ToString("N3") DT</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TOP 5 BÉNÉFICIAIRES -->
+    <div class="card shadow-sm mb-5 kem-card">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-user-tie me-2"></i>Top 5 Bénéficiaires</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 kem-data-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Bénéficiaire</th>
+                        <th>Nombre</th>
+                        <th>Montant Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var g in Model.GroupBy(t => t.OrdreDe).OrderByDescending(g => g.Sum(x => x.Montant)).Take(5))
+                    {
+                        <tr>
+                            <td class="fw-bold text-primary">@g.Key</td>
+                            <td>@g.Count()</td>
+                            <td class="text-success">@g.Sum(x => x.Montant).ToString("N3") DT</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- LETTRES EN RETARD -->
+    <div class="card shadow-sm kem-card mb-5">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Lettres en Retard</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 kem-data-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Bénéficiaire</th>
+                        <th>Échéance</th>
+                        <th>Jours Retard</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model.Where(t => !t.EstPayee && EstEnRetard(t.DateEcheance)))
+                    {
+                        <tr class="kem-row-late">
+                            <td>@t.OrdreDe</td>
+                            <td>@t.DateEcheance.ToString("dd/MM/yyyy")</td>
+                            <td>@((DateTime.Now.Date - t.DateEcheance.Date).Days) j</td>
+                            <td class="text-danger">@t.Montant.ToString("N3") DT</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- STATISTIQUES PAR MOIS -->
+    <div class="card shadow-sm mb-5 kem-card">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Lettres par Mois</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Nombre de lettres</th>
+                        <th>Montant total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var l in lettresParMois)
+                    {
+                        <tr>
+                            <td>@l.Mois.Month/@l.Mois.Year</td>
+                            <td>@l.Count</td>
+                            <td>@l.Montant.ToString("N3") DT</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BOUTON RETOUR -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-primary kem-btn">
+            <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+        </a>
+    </div>
+
+</div>

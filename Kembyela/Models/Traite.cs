@@ -17,7 +17,6 @@ namespace Kembyela.Models
         [Required(ErrorMessage = "La date d'échéance est obligatoire")]
         [Display(Name = "Date d'échéance")]
         [DataType(DataType.Date)]
-        //-------Date d'échéance 
         public DateTime DateEcheance { get; set; } = DateTime.Now.AddMonths(1);
 
         [Required(ErrorMessage = "La ville est obligatoire")]
@@ -68,6 +67,10 @@ namespace Kembyela.Models
         [Display(Name = "Protestable")]
         public bool Protestable { get; set; } = true;
 
+        // NOUVELLE PROPRIÉTÉ : État de paiement
+        [Display(Name = "Payée")]
+        public bool EstPayee { get; set; } = false;  // Valeur par défaut à false
+
         // Généré automatiquement
         [Display(Name = "Montant en lettres")]
         [StringLength(500)]
@@ -82,7 +85,30 @@ namespace Kembyela.Models
         // Méthode pour vérifier si la date d'échéance est passée
         public bool EstEnRetard()
         {
-            return DateEcheance.Date < DateTime.Now.Date; 
+            return DateEcheance.Date < DateTime.Now.Date;
+        }
+
+        // MÉTHODE AJOUTÉE : Pour marquer la lettre de change comme payée
+        public void MarquerCommePayee()
+        {
+            EstPayee = true;
+        }
+
+        // MÉTHODE AJOUTÉE : Pour vérifier le statut de paiement
+        public string GetStatutPaiement()
+        {
+            if (EstPayee)
+            {
+                return "Payée";
+            }
+            else if (EstEnRetard())
+            {
+                return "En retard";
+            }
+            else
+            {
+                return "En attente";
+            }
         }
     }
 }

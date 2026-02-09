@@ -52,6 +52,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link kem-nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Stats" ? "active" : "")"
+                           asp-controller="Traite" asp-action="Stats">
+                            <i class="fas fa-chart-bar me-2"></i>Statistiques
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link kem-nav-link @(ViewContext.RouteData.Values["Action"]?.ToString() == "Print" ? "active" : "")"
                            href="#" id="printButton" style="display: none;">
                             <i class="fas fa-print me-2"></i>Imprimer

@@ -52,6 +52,9 @@ namespace Kembyela.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<bool>("EstPayee")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Monnaie")
                         .IsRequired()
                         .ValueGeneratedOnAdd()

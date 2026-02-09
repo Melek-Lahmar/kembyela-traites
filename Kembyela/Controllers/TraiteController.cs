@@ -133,6 +133,70 @@ namespace Kembyela.Controllers
                 return View(traite);
             }
         }
+        // AJOUTEZ ces actions dans votre TraiteController.cs
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarquerCommePayee(int id)
+        {
+            try
+            {
+                var traite = await _context.Traites.FindAsync(id);
+                if (traite == null)
+                {
+                    TempData["ErrorMessage"] = "Lettre de change non trouvée.";
+                    return RedirectToAction("Index");
+                }
+
+                traite.EstPayee = true;
+                _context.Update(traite);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Lettre de change marquée comme payée avec succès.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erreur: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpGet]
+        public IActionResult Stats()
+        {
+            var traites = _context.Traites
+                .AsNoTracking()
+                .OrderByDescending(t => t.CreatedAt)
+                .ToList();
+
+            return View(traites);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarquerCommeNonPayee(int id)
+        {
+            try
+            {
+                var traite = await _context.Traites.FindAsync(id);
+                if (traite == null)
+                {
+                    TempData["ErrorMessage"] = "Lettre de change non trouvée.";
+                    return RedirectToAction("Index");
+                }
+
+                traite.EstPayee = false;
+                _context.Update(traite);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Lettre de change marquée comme non payée avec succès.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erreur: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
 
         // GET: /Traite/Index
         // GET: /Traite/Index
