@@ -1,5 +1,4 @@
 ﻿using Kembyela.Data;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +10,6 @@ builder.Services.AddControllersWithViews()
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
 
 // Add Session
 builder.Services.AddSession(options =>
@@ -37,9 +34,11 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseSession();
 
+// ✅ ROUTE PAR DÉFAUT : INDEX AU LIEU DE CREATE
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Traite}/{action=Create}/{id?}");
+    pattern: "{controller=Traite}/{action=Index}/{id?}"
+);
 
 // Créer/appliquer les migrations automatiquement
 using (var scope = app.Services.CreateScope())
@@ -56,5 +55,4 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//app.Run("http://localhost:5003");
 app.Run();

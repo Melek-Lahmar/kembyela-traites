@@ -28,129 +28,338 @@
         .Select(g => new { Mois = g.Key, Count = g.Count(), Montant = g.Sum(x => x.Montant) })
         .OrderBy(x => x.Mois.Year).ThenBy(x => x.Mois.Month)
         .ToList();
+
+    // Stats banques (banque + adresse)
+    var topBanques = Model
+        .Where(t => !string.IsNullOrWhiteSpace(t.Banque))
+        .GroupBy(t => t.Banque)
+        .Select(g => new
+        {
+            Banque = g.Key,
+            Count = g.Count(),
+            Montant = g.Sum(x => x.Montant),
+            Adresses = g.Select(x => x.AdresseBanque)
+                        .Where(a => !string.IsNullOrWhiteSpace(a))
+                        .Distinct()
+                        .ToList()
+        })
+        .OrderByDescending(x => x.Montant)
+        .ThenByDescending(x => x.Count)
+        .Take(8)
+        .ToList();
 }
 
-<div class="container mt-4 kem-form-container">
+<div class="container-fluid px-4 py-4 kem-stats-page">
 
-    <!-- TITRE -->
-   
-    <div class="card border-0 shadow-sm mb-5 kem-card kem-search-card">
-        <div class="card-header kem-card-header kem-search-header">
-            <div class="d-flex align-items-center">
-                <i class="fas fa-chart-line me-2 text-primary"></i>
-                <h4 class="mb-0">Tableau de bord – Lettres de Change</h4>
-            </div>
-        </div>
-       
-            
-    </div>
-    <!-- CARTES KPI PRINCIPALES -->
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card">
-                <div class="card-body">
-                    <h6 class="text-muted">Total Lettres</h6>
-                    <h2 class="fw-bold">@total</h2>
-                    <small>@total Lettres</small>
+    <!-- HEADER / TITRE -->
+    <div class="card border-0 shadow-sm mb-4 kem-card kem-page-header">
+        <div class="card-body d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <div class="kem-header-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <h4 class="mb-0 fw-bold">Tableau de bord – Lettres de Change</h4>
+                    <div class="text-muted small mt-1">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Vue globale : volumes, montants, retards, banques et tendances mensuelles
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-success text-white">
-                <div class="card-body">
-                    <h6 class="text-white">Payées</h6>
-                    <h2 class="fw-bold">@payees</h2>
-                    <small>@montantPaye.ToString("N3") DT</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-danger text-white">
-                <div class="card-body">
-                    <h6 class="text-white">En Retard</h6>
-                    <h2 class="fw-bold">@enRetard</h2>
-                    <small>@montantRetard.ToString("N3") DT</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-warning text-dark">
-                <div class="card-body">
-                    <h6>En Attente</h6>
-                    <h2 class="fw-bold">@enAttente</h2>
-                    <small>@montantAttente.ToString("N3") DT</small>
-                </div>
-            </div>
+
+            <a asp-action="Index" class="btn btn-outline-primary kem-btn">
+                <i class="fas fa-list me-2"></i>Retour à la liste
+            </a>
         </div>
     </div>
 
-    <!-- CARTES KPI SUPPLÉMENTAIRES -->
-    
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-secondary text-white">
-                <div class="card-body">
-                    <h6>Montant moyen par lettre</h6>
-                    <h2 class="fw-bold">@montantMoyen.ToString("N3") DT</h2>
+    <!-- KPI PRINCIPAUX -->
+    <div class="row g-4 mb-4 kem-kpi-row">
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-kpi kem-kpi-total">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Total Lettres</div>
+                            <div class="display-6 fw-bold mb-1">@total</div>
+                            <div class="text-muted small"><i class="fas fa-file-contract me-1"></i>@total lettre(s)</div>
+                        </div>
+                        <div class="kem-kpi-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="kem-kpi-footer">
+                    <span class="text-muted small">Montant total : <strong>@montantTotal.ToString("N3") DT</strong></span>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-success text-white">
-                <div class="card-body">
-                    <h6>Lettres payées (%)</h6>
-                    <h2 class="fw-bold">@pctPayees.ToString("N1") %</h2>
+
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-kpi kem-kpi-paid">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Payées</div>
+                            <div class="display-6 fw-bold mb-1">@payees</div>
+                            <div class="text-success small">
+                                <i class="fas fa-check-circle me-1"></i>@montantPaye.ToString("N3") DT
+                            </div>
+                        </div>
+                        <div class="kem-kpi-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="kem-kpi-footer">
+                    <span class="text-muted small">Taux : <strong>@pctPayees.ToString("N1")%</strong></span>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-danger text-white">
-                <div class="card-body">
-                    <h6>En retard (%)</h6>
-                    <h2 class="fw-bold">@pctRetard.ToString("N1") %</h2>
+
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-kpi kem-kpi-late">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">En retard</div>
+                            <div class="display-6 fw-bold mb-1">@enRetard</div>
+                            <div class="text-danger small">
+                                <i class="fas fa-exclamation-triangle me-1"></i>@montantRetard.ToString("N3") DT
+                            </div>
+                        </div>
+                        <div class="kem-kpi-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="kem-kpi-footer">
+                    <span class="text-muted small">Taux : <strong>@pctRetard.ToString("N1")%</strong></span>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm kem-card bg-warning text-dark">
-                <div class="card-body">
-                    <h6>En attente (%)</h6>
-                    <h2 class="fw-bold">@pctAttente.ToString("N1") %</h2>
+
+        <div class="col-xl-3 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-kpi kem-kpi-pending">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">En attente</div>
+                            <div class="display-6 fw-bold mb-1">@enAttente</div>
+                            <div class="text-warning small">
+                                <i class="fas fa-clock me-1"></i>@montantAttente.ToString("N3") DT
+                            </div>
+                        </div>
+                        <div class="kem-kpi-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="kem-kpi-footer">
+                    <span class="text-muted small">Taux : <strong>@pctAttente.ToString("N1")%</strong></span>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- KPI SECONDAIRES -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-4 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-mini-card">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div>
+                            <div class="text-muted small">Montant moyen</div>
+                            <div class="h4 fw-bold mb-0">@montantMoyen.ToString("N3") DT</div>
+                            <div class="text-muted small mt-2">
+                                <i class="fas fa-calculator me-1"></i>sur l’ensemble des lettres
+                            </div>
+                        </div>
+                        <span class="badge kem-badge-soft">Moyenne</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-6">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-mini-card">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div>
+                            <div class="text-muted small">Montant moyen payé</div>
+                            <div class="h4 fw-bold mb-0 text-success">@montantMoyenPaye.ToString("N3") DT</div>
+                            <div class="text-muted small mt-2">
+                                <i class="fas fa-check-circle me-1"></i>lettres payées uniquement
+                            </div>
+                        </div>
+                        <span class="badge kem-badge-soft-success">Payé</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-12">
+            <div class="card border-0 shadow-sm h-100 kem-card kem-mini-card">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div>
+                            <div class="text-muted small">Montant moyen en retard</div>
+                            <div class="h4 fw-bold mb-0 text-danger">@montantMoyenRetard.ToString("N3") DT</div>
+                            <div class="text-muted small mt-2">
+                                <i class="fas fa-exclamation-triangle me-1"></i>lettres en retard uniquement
+                            </div>
+                        </div>
+                        <span class="badge kem-badge-soft-danger">Retard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BANQUES -->
+    <div class="card border-0 shadow-sm mb-4 kem-card">
+        <div class="card-header kem-card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-university me-2 text-primary"></i>
+                    <h5 class="mb-0">Statistiques par Banque (avec adresse)</h5>
+                </div>
+                <span class="text-muted small">
+                    <i class="fas fa-filter me-1"></i>Top 8 par montant
+                </span>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            @if (topBanques == null || topBanques.Count == 0)
+            {
+                <div class="p-4">
+                    <div class="alert alert-light border mb-0 kem-empty-state">
+                        <i class="fas fa-info-circle me-2 text-primary"></i>
+                        Aucune banque trouvée dans les données.
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 kem-data-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="py-3">Banque</th>
+                                <th class="py-3">Adresse(s)</th>
+                                <th class="py-3 text-center">Nombre</th>
+                                <th class="py-3 text-end pe-4">Montant total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var b in topBanques)
+                            {
+                                <tr>
+                                    <td class="fw-bold">
+                                        <span class="kem-pill">
+                                            <i class="fas fa-building me-2"></i>@b.Banque
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (b.Adresses != null && b.Adresses.Count > 0)
+                                        {
+                                            <ul class="mb-0 ps-3 kem-address-list">
+                                                @foreach (var a in b.Adresses.Take(2))
+                                                {
+                                                    <li>@a</li>
+                                                }
+                                                @if (b.Adresses.Count > 2)
+                                                {
+                                                    <li class="text-muted">+ @(b.Adresses.Count - 2) autre(s)</li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-primary">@b.Count</span>
+                                    </td>
+                                    <td class="text-end pe-4 fw-bold text-success">
+                                        @b.Montant.ToString("N3") DT
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-3 border-top text-muted small">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Les adresses affichées proviennent du champ <strong>AdresseBanque</strong>.
+                </div>
+            }
         </div>
     </div>
 
     <!-- INDICATEURS FINANCIERS -->
-    <div class="card shadow-sm mb-5 kem-card">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Indicateurs Financiers</h5>
+    <div class="card border-0 shadow-sm mb-4 kem-card">
+        <div class="card-header kem-card-header">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-money-bill-wave me-2 text-primary"></i>
+                <h5 class="mb-0">Indicateurs Financiers</h5>
+            </div>
         </div>
         <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">💰 Montant total émis <strong class="float-end">@montantTotal.ToString("N3") DT</strong></li>
-                <li class="list-group-item text-success">✅ Montant encaissé <strong class="float-end">@montantPaye.ToString("N3") DT</strong></li>
-                <li class="list-group-item text-danger">⚠️ Montant en retard <strong class="float-end">@montantRetard.ToString("N3") DT</strong></li>
-                <li class="list-group-item text-warning">⏳ Montant restant <strong class="float-end">@montantAttente.ToString("N3") DT</strong></li>
-                <li class="list-group-item">📊 Montant moyen par lettre <strong class="float-end">@montantMoyen.ToString("N3") DT</strong></li>
-                <li class="list-group-item text-success">📈 Montant moyen payé <strong class="float-end">@montantMoyenPaye.ToString("N3") DT</strong></li>
-                <li class="list-group-item text-danger">📉 Montant moyen retard <strong class="float-end">@montantMoyenRetard.ToString("N3") DT</strong></li>
+            <ul class="list-group list-group-flush kem-kpi-list">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>💰 Montant total émis</span>
+                    <strong>@montantTotal.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-success">
+                    <span>✅ Montant encaissé</span>
+                    <strong>@montantPaye.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-danger">
+                    <span>⚠️ Montant en retard</span>
+                    <strong>@montantRetard.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-warning">
+                    <span>⏳ Montant restant</span>
+                    <strong>@montantAttente.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>📊 Montant moyen par lettre</span>
+                    <strong>@montantMoyen.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-success">
+                    <span>📈 Montant moyen payé</span>
+                    <strong>@montantMoyenPaye.ToString("N3") DT</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center text-danger">
+                    <span>📉 Montant moyen retard</span>
+                    <strong>@montantMoyenRetard.ToString("N3") DT</strong>
+                </li>
             </ul>
         </div>
     </div>
 
     <!-- TOP 5 BÉNÉFICIAIRES -->
-    <div class="card shadow-sm mb-5 kem-card">
-        <div class="card-header bg-info text-white">
-            <h5 class="mb-0"><i class="fas fa-user-tie me-2"></i>Top 5 Bénéficiaires</h5>
+    <div class="card border-0 shadow-sm mb-4 kem-card">
+        <div class="card-header kem-card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user-tie me-2 text-primary"></i>
+                    <h5 class="mb-0">Top 5 Bénéficiaires</h5>
+                </div>
+                <span class="text-muted small"><i class="fas fa-trophy me-1"></i>Par montant</span>
+            </div>
         </div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0 kem-data-table">
                 <thead class="table-light">
                     <tr>
-                        <th>Bénéficiaire</th>
-                        <th>Nombre</th>
-                        <th>Montant Total</th>
+                        <th class="py-3">Bénéficiaire</th>
+                        <th class="py-3 text-center">Nombre</th>
+                        <th class="py-3 text-end pe-4">Montant total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,8 +367,8 @@
                     {
                         <tr>
                             <td class="fw-bold text-primary">@g.Key</td>
-                            <td>@g.Count()</td>
-                            <td class="text-success">@g.Sum(x => x.Montant).ToString("N3") DT</td>
+                            <td class="text-center">@g.Count()</td>
+                            <td class="text-end pe-4 fw-bold text-success">@g.Sum(x => x.Montant).ToString("N3") DT</td>
                         </tr>
                     }
                 </tbody>
@@ -168,18 +377,25 @@
     </div>
 
     <!-- LETTRES EN RETARD -->
-    <div class="card shadow-sm kem-card mb-5">
-        <div class="card-header bg-danger text-white">
-            <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Lettres en Retard</h5>
+    <div class="card border-0 shadow-sm mb-4 kem-card">
+        <div class="card-header kem-card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-2 text-danger"></i>
+                    <h5 class="mb-0">Lettres en Retard</h5>
+                </div>
+                <span class="badge bg-danger">@enRetard</span>
+            </div>
         </div>
+
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0 kem-data-table">
                 <thead class="table-light">
                     <tr>
-                        <th>Bénéficiaire</th>
-                        <th>Échéance</th>
-                        <th>Jours Retard</th>
-                        <th>Montant</th>
+                        <th class="py-3">Bénéficiaire</th>
+                        <th class="py-3">Échéance</th>
+                        <th class="py-3 text-center">Jours retard</th>
+                        <th class="py-3 text-end pe-4">Montant</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -188,8 +404,8 @@
                         <tr class="kem-row-late">
                             <td>@t.OrdreDe</td>
                             <td>@t.DateEcheance.ToString("dd/MM/yyyy")</td>
-                            <td>@((DateTime.Now.Date - t.DateEcheance.Date).Days) j</td>
-                            <td class="text-danger">@t.Montant.ToString("N3") DT</td>
+                            <td class="text-center">@((DateTime.Now.Date - t.DateEcheance.Date).Days) j</td>
+                            <td class="text-end pe-4 fw-bold text-danger">@t.Montant.ToString("N3") DT</td>
                         </tr>
                     }
                 </tbody>
@@ -197,39 +413,197 @@
         </div>
     </div>
 
-    <!-- STATISTIQUES PAR MOIS -->
-    <div class="card shadow-sm mb-5 kem-card">
-        <div class="card-header bg-secondary text-white">
-            <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Lettres par Mois</h5>
+    <!-- PAR MOIS -->
+    <div class="card border-0 shadow-sm mb-4 kem-card">
+        <div class="card-header kem-card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                    <h5 class="mb-0">Lettres par Mois</h5>
+                </div>
+                <span class="text-muted small"><i class="fas fa-calendar me-1"></i>Échéances</span>
+            </div>
         </div>
-        <div class="card-body">
-            <table class="table table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th>Mois</th>
-                        <th>Nombre de lettres</th>
-                        <th>Montant total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var l in lettresParMois)
-                    {
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 kem-data-table">
+                    <thead class="table-light">
                         <tr>
-                            <td>@l.Mois.Month/@l.Mois.Year</td>
-                            <td>@l.Count</td>
-                            <td>@l.Montant.ToString("N3") DT</td>
+                            <th class="py-3">Mois</th>
+                            <th class="py-3 text-center">Nombre</th>
+                            <th class="py-3 text-end pe-4">Montant total</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var l in lettresParMois)
+                        {
+                            <tr>
+                                <td>@l.Mois.Month/@l.Mois.Year</td>
+                                <td class="text-center">@l.Count</td>
+                                <td class="text-end pe-4 fw-bold">@l.Montant.ToString("N3") DT</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- BOUTON RETOUR -->
-    <div class="text-center mt-4">
-        <a asp-action="Index" class="btn btn-primary kem-btn">
+    <!-- BOUTON RETOUR (bas) -->
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-primary kem-btn px-4">
             <i class="fas fa-arrow-left me-2"></i>Retour à la liste
         </a>
     </div>
 
 </div>
+
+<style>
+    /* =========================
+           STATS - Homogène Kembyela
+           (style cohérent avec pages Index/Create)
+           ========================= */
+
+    .kem-stats-page {
+        background: transparent;
+    }
+
+    .kem-card {
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .kem-card-header {
+        background: #fff;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        padding: 14px 18px;
+    }
+
+    .kem-page-header .card-body {
+        padding: 18px 18px;
+    }
+
+    .kem-header-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13,110,253,0.10);
+        border: 1px solid rgba(13,110,253,0.18);
+        color: #0d6efd;
+        font-size: 18px;
+    }
+
+    /* KPI Cards */
+    .kem-kpi {
+        position: relative;
+    }
+
+        .kem-kpi .kem-kpi-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.06);
+            font-size: 18px;
+            color: #1f2d3d;
+        }
+
+    .kem-kpi-footer {
+        padding: 12px 16px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        background: rgba(0,0,0,0.02);
+    }
+
+    .kem-kpi-total {
+        border-left: 4px solid #0d6efd;
+    }
+
+    .kem-kpi-paid {
+        border-left: 4px solid #28a745;
+    }
+
+    .kem-kpi-late {
+        border-left: 4px solid #dc3545;
+    }
+
+    .kem-kpi-pending {
+        border-left: 4px solid #ffc107;
+    }
+
+    /* Mini cards / badges */
+    .kem-mini-card .badge {
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-weight: 600;
+    }
+
+    .kem-badge-soft {
+        background: rgba(108,117,125,0.10);
+        color: #495057;
+        border: 1px solid rgba(108,117,125,0.18);
+    }
+
+    .kem-badge-soft-success {
+        background: rgba(40,167,69,0.10);
+        color: #1e7e34;
+        border: 1px solid rgba(40,167,69,0.18);
+    }
+
+    .kem-badge-soft-danger {
+        background: rgba(220,53,69,0.10);
+        color: #b02a37;
+        border: 1px solid rgba(220,53,69,0.18);
+    }
+
+    /* Tables */
+    .kem-data-table thead th {
+        font-weight: 700;
+        color: #1f2d3d;
+        border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    }
+
+    .kem-data-table tbody td {
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        vertical-align: middle;
+    }
+
+    .kem-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: rgba(13,110,253,0.08);
+        border: 1px solid rgba(13,110,253,0.18);
+        color: #0b2d5c;
+    }
+
+    .kem-address-list li {
+        margin-bottom: 2px;
+    }
+
+    /* Late rows */
+    .kem-row-late {
+        background-color: rgba(220, 53, 69, 0.05);
+    }
+
+    /* List group */
+    .kem-kpi-list .list-group-item {
+        padding: 12px 6px;
+        border-color: rgba(0,0,0,0.06);
+    }
+
+    /* Buttons */
+    .kem-btn {
+        border-radius: 12px;
+    }
+
+    .kem-empty-state {
+        border-radius: 14px;
+    }
+</style>

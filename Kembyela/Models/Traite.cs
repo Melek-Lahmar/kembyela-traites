@@ -64,6 +64,12 @@ namespace Kembyela.Models
         [StringLength(200, ErrorMessage = "Le nom de la banque ne doit pas dépasser 200 caractères")]
         public string Banque { get; set; }
 
+
+        [Display(Name = "Adresse de la banque")]
+[StringLength(300)]
+public string? AdresseBanque { get; set; }
+
+
         [Display(Name = "Protestable")]
         public bool Protestable { get; set; } = true;
 

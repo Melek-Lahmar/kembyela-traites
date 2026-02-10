@@ -40,9 +40,14 @@
             position: relative;
             width: 210mm;
             height: 297mm;
-            background: white;
+            background-image: url('/templates/lettre_change.png');
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: 210mm 297mm; /* 🔥 OBLIGATOIRE */
             overflow: hidden;
         }
+
+
 
         /* ===================== */
         /* CHAMPS AVEC COORDONNÉES EXACTES EN CM */
@@ -63,112 +68,112 @@
 
         /* MontantEnLettres: L=0.25cm, T=4.75cm, W=16.15cm, H=0.5cm */
         .montant-en-lettres {
-            left: 7mm;
-            top: 49.75mm;
+            left: 5.5mm;
+            top: 47.75mm;
             width: 150mm;
             height: 5mm;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 0.8em; /* ou une taille spécifique comme 10px, 8pt, etc. */
+            font-size: 0.79em; /* ou une taille spécifique comme 10px, 8pt, etc. */
         }
 
         /* Ville (Haut): L=8.75cm, T=1cm, W=2.5cm, H=0.5cm */
         .ville-haut {
-            left: 88.5mm;    /* 8.75cm = 87.5mm */
-            top: 10mm;       /* 1cm = 10mm */
-            width: 25mm;     /* 2.5cm = 25mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 84.5mm; /* 8.75cm = 87.5mm */
+            top: 8mm; /* 1cm = 10mm */
+            width: 25mm; /* 2.5cm = 25mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* Ville (bas): L=0.25cm, T=5.75cm, W=2.5cm, H=0.5cm */
         .ville-bas {
-            left: 7.5mm;     /* 0.75cm = 7.5mm */
-            top: 57.5mm;     /* 5.75cm = 57.5mm */
-            width: 22.5mm;     /* 2.25cm = 22.5mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 5.85mm; /* 0.75cm = 7.5mm */
+            top: 54.75mm; /* 5.75cm = 57.5mm */
+            width: 22.5mm; /* 2.25cm = 22.5mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* CreatedAt (Haut): L=8.5cm, T=1.5cm, W=2.5cm, H=0.5cm */
         .created-at-haut {
-            left: 88mm; /* 8.75cm = 87.5mm */
-            top: 15mm;       /* 1.5cm = 15mm */
-            width: 25mm;     /* 2.5cm = 25mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 85.75mm; /* 8.75cm = 87.5mm */
+            top: 13mm; /* 1.5cm = 15mm */
+            width: 25mm; /* 2.5cm = 25mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* CreatedAt (bas): L=3cm, T=5.75cm, W=2.5cm, H=0.5cm */
         .created-at-bas {
-            left: 32.5mm;      /* 3.25cm = 32.5mm */
-            top: 57.5mm;     /* 5.75cm = 57.5mm */
-            width: 25mm;     /* 2.5cm = 25mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 32.5mm; /* 3.25cm = 32.5mm */
+            top: 54.75mm; /* 5.75cm = 57.5mm */
+            width: 25mm; /* 2.5cm = 25mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* DateEcheance (Haut): L=4.75cm, T=1.5cm, W=3cm, H=0.5cm */
         .date-echeance-haut {
-            left: 51mm;    /* 4.75cm = 47.5mm */
-            top: 15mm;       /* 1.5cm = 15mm */
-            width: 30mm;     /* 3cm = 30mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 51mm; /* 4.75cm = 47.5mm */
+            top: 12.65mm; /* 1.5cm = 15mm */
+            width: 30mm; /* 3cm = 30mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* Aval: L=4.25cm, T=8.25cm, W=2.5cm, H=0.5cm */
         .aval {
-            left: 42.5mm;    /* 4.25cm = 42.5mm */
-            top: 82.85mm;     /* 8.25cm = 82.5mm */
-            width: 20mm;     /* 2cm = 20mm */
-            height: 10mm;     /* 1 cm = 10mm */
+            left: 42.5mm; /* 4.25cm = 42.5mm */
+            top: 82.5mm; /* 8.25cm = 82.5mm */
+            width: 20mm; /* 2cm = 20mm */
+            height: 10mm; /* 1 cm = 10mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* DateEdition: L=5.75cm, T=5.75cm, W=2.5cm, H=0.5cm */
         .date-edition {
-            left: 61mm; /* 6cm = 60mm                         WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR */
-            top: 57.5mm;     /* 5.75cm = 57.5mm */
-            width: 25mm;     /* 2.5cm = 25mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 59mm; /* 6cm = 60mm                         WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR */
+            top: 54.75mm; /* 5.75cm = 57.5mm */
+            width: 25mm; /* 2.5cm = 25mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
         }
 
         /* RIB (Haut): L=7cm, T=2.5cm, W=4.25cm, H=0.5cm */
         .rib-haut {
-            left: 50.75mm;      /* 7cm = 70mm */
-            top: 25mm;       /* 2.5cm = 25mm */
-            width: 42.5mm;   /* 4.25cm = 42.5mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 50mm; /* 7cm = 70mm */
+            top: 22.5mm; /* 2.5cm = 25mm */
+            width: 42.5mm; /* 4.25cm = 42.5mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            font-size: 9.5pt;
+            font-size: 10pt;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         /* RIB (bas): L=2cm, T=6.75cm, W=4.5cm, H=0.5cm */
         .rib-bas {
-            left: 4mm;      /* 2cm = 20mm */
-            top: 67.5mm;     /* 6.75cm = 67.5mm */
-            width: 45mm;     /* 4.5cm = 45mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 3.15mm; /* 2cm = 20mm */
+            top: 65.5mm; /* 6.75cm = 67.5mm */
+            width: 45mm; /* 4.5cm = 45mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            font-size: 9.5pt;
+            font-size: 9.91pt;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.7px;
         }
 
         /* OrdreDe: L=0.25cm, T=3.75cm, W=3.75cm, H=0.75cm */
         .ordre-de {
-            left: 51mm; /* 0.75cm = 2.75mm */
-            top: 40.75mm;     /* 3.75cm = 37.5mm */
-            width: 30mm;   /* 3cm = 30mm */
-            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            left: 47mm; /* 0.75cm = 2.75mm */
+            top: 39.1mm; /* 3.75cm = 37.5mm */
+            width: 30mm; /* 3cm = 30mm */
+            height: 7.5mm; /* 0.75cm = 7.5mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
             font-size: 0.9em;
@@ -176,17 +181,17 @@
 
         /* Banque: L=11.75cm, T=6.75cm, W=5cm, H=1cm */
         .banque {
-            left: 120mm;   /* 12.25cm = 122.5mm */
-            top: 68mm;     /* 6.75cm = 67.5mm */
-            width: 50mm;     /* 5cm = 50mm */
-            height: 10mm;    /* 1cm = 10mm */
+            left: 118.5mm; /* 12.25cm = 122.5mm */
+            top: 67.5mm; /* 6.75cm = 67.5mm */
+            width: 50mm; /* 5cm = 50mm */
+            height: 10mm; /* 1cm = 10mm */
             padding: 2mm 0 2mm 0;
         }
 
-
+        /* Banque: L=11.75cm, T=6.75cm, W=5cm, H=1cm */
         .Abanque {
-            left: 120mm; /* 12.25cm = 122.5mm */
-            top: 72.25mm; /* 6.75cm = 67.5mm */
+            left: 118.5mm; /* 12.25cm = 122.5mm */
+            top: 70.5mm; /* 6.75cm = 67.5mm */
             width: 50mm; /* 5cm = 50mm */
             height: 10mm; /* 1cm = 10mm */
             padding: 2mm 0 2mm 0;
@@ -194,40 +199,40 @@
 
         /* Payer: L=7.75cm, T=7.25cm, W=3.25cm, H=1.5cm */
         .payer {
-            left: 82.5mm;    /* 8.25cm = 82.5mm */
-            top: 73.5mm;     /* 7.25cm = 72.5mm */
-            width: 32.5mm;   /* 3.25cm = 32.5mm */
-            height: 15mm;    /* 1.5cm = 15mm */
+            left: 78mm; /* 8.25cm = 82.5mm */
+            top: 72.5mm; /* 7.25cm = 72.5mm */
+            width: 32.5mm; /* 3.25cm = 32.5mm */
+            height: 15mm; /* 1.5cm = 15mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
         }
 
         /* Monnaie (Haut): L=16.25cm, T=2.5cm, W=0.75cm, H=0.5cm */
         .monnaie-haut {
-            left: 152mm;   /* 16.25cm = 162.5mm */
-            top: 24.5mm; /* 2.25cm = 22.5mm */
-            width: 7.5mm;    /* 0.75cm = 7.5mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            left: 155.5mm; /* 16.25cm = 162.5mm */
+            top: 21.5mm; /* 2.25cm = 22.5mm */
+            width: 7.5mm; /* 0.75cm = 7.5mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
         }
 
         /* Monnaie (Bas): L=16cm, T=4cm, W=1cm, H=0.5cm */
         .monnaie-bas {
-            left: 152mm; /* 16.25cm = 162.5mm */
-            top: 38.5mm; /* 3.75cm = 37.5mm */
+            left: 155.5mm; /* 16.25cm = 162.5mm */
+            top: 36.5mm; /* 3.75cm = 37.5mm */
             width: 7.5mm; /* 0.75cm = 7.5mm */
-            height: 5mm;     /* 0.5cm = 5mm */
+            height: 5mm; /* 0.5cm = 5mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
         }
 
         /* Montant (Haut): L=13cm, T=2.5cm, W=3cm, H=0.75cm */
         .montant-haut {
-            left: 120mm;     /* 13cm = 130mm */
-            top: 24.5mm;       /* 2.25cm = 22.5mm */
-            width: 30mm;     /* 3cm = 30mm */
-            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            left: 123mm; /* 13cm = 130mm */
+            top: 21.5mm; /* 2.25cm = 22.5mm */
+            width: 30mm; /* 3cm = 30mm */
+            height: 7.5mm; /* 0.75cm = 7.5mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
             text-align: right;
@@ -235,16 +240,14 @@
 
         /* Montant (Bas): L=13cm, T=4cm, W=2.75cm, H=0.75cm */
         .montant-bas {
-            left: 123mm;     /* 13cm = 130mm */
-            top: 38.5mm;       /* 3.75cm = 37.5mm */
-            width: 27.5mm;   /* 2.75cm = 27.5mm */
-            height: 7.5mm;   /* 0.75cm = 7.5mm */
+            left: 126.13mm; /* 13cm = 130mm */
+            top: 36.5mm; /* 3.75cm = 37.5mm */
+            width: 27.5mm; /* 2.75cm = 27.5mm */
+            height: 7.5mm; /* 0.75cm = 7.5mm */
             padding: 2mm 0 2mm 0;
             font-weight: bold;
             text-align: right;
         }
-
-
         /* Base : croix (X) avec même esprit que .field */
         .protestable-mark {
             position: absolute;
@@ -262,7 +265,7 @@
         /* ✅ CASE "PROTESTABLE" cochée (true) : POSITION 1 */
         .protestable-true {
             left: 77.30mm; /* 13cm = 130mm */
-            top: 36mm; /* 3.75cm = 37.5mm */
+            top: 34mm; /* 3.75cm = 37.5mm */
             width: 27.5mm; /* 2.75cm = 27.5mm */
             height: 7.5mm; /* 0.75cm = 7.5mm */
             padding: 2mm 0 2mm 0;
@@ -271,50 +274,44 @@
         /* ✅ CASE "NON PROTESTABLE" cochée (false) : POSITION 2 */
         .protestable-false {
             left: 71.5mm; /* 13cm = 130mm */
-            top: 36mm; /* 3.75cm = 37.5mm */
+            top: 34mm; /* 3.75cm = 37.5mm */
             width: 27.5mm; /* 2.75cm = 27.5mm */
             height: 7.5mm; /* 0.75cm = 7.5mm */
             padding: 2mm 0 2mm 0;
         }
+        /* ===================== */
+        /* BOUTON ALLER VERS PRINT */
+        /* ===================== */
+        .kem-go-print-btn {
+            position: fixed; /* toujours visible */
+            top: 18px; /* position écran */
+            left: 800px;
+            z-index: 9999;
+            background-color: #198754; /* vert élégant */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            transition: background-color .2s ease, transform .2s ease;
+        }
 
-        /* ===================== */
-        /* STYLES D'IMPRESSION   */
-        /* ===================== */
+            .kem-go-print-btn:hover {
+                background-color: #157347;
+                transform: translateY(-1px);
+            }
+
+        /* ❌ ne pas afficher le bouton à l'impression */
         @@media print {
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-            }
-            
-            .page-a4 {
-                position: absolute;
-                left: 0;
-                top: 0;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-            
-            /* Force le noir et blanc */
-            * {
-                color: black !important;
-                background: transparent !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
-            /* Pas de bordures */
-            .field {
-                border: none !important;
-                outline: none !important;
-                box-shadow: none !important;
-            }
-            
-            /* Cache tout sauf le contenu A4 */
-            body > *:not(.page-a4) {
+            .kem-go-print-btn {
                 display: none !important;
             }
         }
+
 
         /* ===================== */
         /* VISUALISATION ÉCRAN   */
@@ -328,22 +325,13 @@
                 padding: 20px;
                 background: #f0f0f0;
             }
-            
+
             .page-a4 {
                 box-shadow: 0 0 10px rgba(0,0,0,0.2);
             }
         }
     </style>
 </head>
-<script>
-    window.addEventListener('load', function () {
-        // petit délai pour laisser le rendu se terminer (important pour impression)
-        setTimeout(function () {
-            window.print(); // équivalent Ctrl+P
-        }, 300);
-    });
-</script>
-
 <body>
     <div class="page-a4">
         <!-- Montant en lettres -->
@@ -406,10 +394,11 @@
             @Model.Banque
         </div>
 
-        <!-- Adresse Banque -->
         <div class="field Abanque">
             @Model.AdresseBanque
+
         </div>
+
 
         <!-- Payer -->
         <div class="field payer">
@@ -435,10 +424,18 @@
         <div class="field montant-bas">
             @Model.Montant.ToString("N3")
         </div>
-        <!-- Protestable -->
+
         <div class="protestable-mark @(Model.Protestable ? "protestable-true" : "protestable-false")">
             X
         </div>
+        <a asp-action="Print"
+           asp-route-id="@Model.Id"
+           target="_blank"
+           class="kem-go-print-btn">
+            🖨️ Aller à l’impression
+        </a>
+
+
     </div>
 </body>
 </html>

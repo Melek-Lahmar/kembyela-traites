@@ -103,11 +103,16 @@
         <div class="col-12">
             <div class="card shadow-sm mb-4 kem-card">
                 <div class="card-header kem-card-header bg-info">
-                    <h5 class="mb-0"><i class="fas fa-users"></i> Bénéficiaire et paiement</h5>
+                    <h5 class="mb-0">
+                        <i class="fas fa-users me-2"></i> Bénéficiaire et paiement
+                    </h5>
                 </div>
+
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row g-3">
+
+                        <!-- Colonne gauche -->
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label asp-for="OrdreDe" class="form-label fw-bold">À l'ordre de *</label>
                                 <input asp-for="OrdreDe" class="form-control kem-form-control" placeholder="Nom du bénéficiaire" required>
@@ -119,35 +124,75 @@
                                 <input asp-for="Payer" class="form-control kem-form-control" placeholder="Nom du payeur" required>
                                 <span asp-validation-for="Payer" class="text-danger small"></span>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label asp-for="Aval" class="form-label">Aval (optionnel)</label>
+                                <label asp-for="Aval" class="form-label fw-bold">Aval (optionnel)</label>
                                 <input asp-for="Aval" class="form-control kem-form-control" placeholder="Nom de l'avaliseur">
                                 <small class="form-text text-muted kem-form-text">Laisser vide si pas d'aval</small>
                                 <span asp-validation-for="Aval" class="text-danger small"></span>
                             </div>
+                        </div>
 
+                        <!-- Colonne droite -->
+                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label asp-for="Banque" class="form-label fw-bold">Banque *</label>
-                                <input asp-for="Banque" class="form-control kem-form-control" placeholder="Nom de la banque" required>
+                                <select asp-for="Banque" class="form-select kem-form-control" required>
+                                    <option value="">-- Choisir une banque --</option>
+
+                                    <!-- Pas d’abréviation => value = nom, texte = nom -->
+                                    <option value="Al Baraka Bank">Al Baraka Bank</option>
+                                    <option value="Amen Bank">Amen Bank</option>
+                                    <option value="Attijari Bank">Attijari Bank</option>
+                                    <option value="Banque Zitouna">Banque Zitouna</option>
+                                    <option value="La Poste Tunisienne">La Poste Tunisienne</option>
+                                    <option value="Wifak Bank">Wifak Bank</option>
+
+                                    <!-- Abréviation => value = ABR, texte = Nom (ABR) -->
+                                    <option value="ABC">Arab Banking Corporation (ABC)</option>
+                                    <option value="ATB">Arab Tunisian Bank (ATB)</option>
+                                    <option value="BH">Banque de l’Habitat (BH)</option>
+                                    <option value="BT">Banque de Tunisie (BT)</option>
+                                    <option value="BTE">Banque de Tunisie et des Emirats (BTE)</option>
+                                    <option value="BFT">Banque Franco Tunisienne (BFT)</option>
+                                    <option value="BIAT">Banque Internationale Arabe de Tunisie (BIAT)</option>
+                                    <option value="BNA">Banque Nationale Agricole (BNA)</option>
+                                    <option value="BTS">Banque Tunisienne de Solidarité (BTS)</option>
+                                    <option value="BTK">Banque Tuniso Koweitienne (BTK)</option>
+                                    <option value="BTL">Banque Tuniso-Libyenne (BTL)</option>
+                                    <option value="QNB-Tunis">Qatar National Bank – Tunis (QNB-Tunis)</option>
+                                    <option value="STB">Société Tunisienne de Banque (STB)</option>
+                                    <option value="TSB">Tunisian Saudi Bank (TSB)</option>
+                                    <option value="UBCI">Union Bancaire de Commerce et d’Industrie (UBCI)</option>
+                                    <option value="UIB">Union Internationale de Banque (UIB)</option>
+                                </select>
                                 <span asp-validation-for="Banque" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="AdresseBanque" class="form-label fw-bold">Adresse de la banque</label>
+                                <input asp-for="AdresseBanque" class="form-control kem-form-control"
+                                       placeholder="Ex : Avenue Habib Bourguiba, Tunis">
+                                <small class="form-text text-muted">Champ optionnel</small>
+                                <span asp-validation-for="AdresseBanque" class="text-danger small"></span>
                             </div>
                         </div>
 
-                        <div class="col-12 mt-3">
-                            <div class="form-check form-switch kem-switch">
+                        <!-- Switch -->
+                        <div class="col-12">
+                            <div class="form-check form-switch kem-switch mt-2">
                                 <input asp-for="Protestable" class="form-check-input" type="checkbox" role="switch" checked>
                                 <label asp-for="Protestable" class="form-check-label fw-bold">
-                                    <i class="fas fa-exclamation-triangle"></i> Protestable
+                                    <i class="fas fa-exclamation-triangle me-1"></i> Protestable
                                 </label>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Boutons d'action -->
         <div class="col-12 text-center mt-4 kem-form-actions">

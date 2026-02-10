@@ -54,6 +54,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaXRlXFByaW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/MSI/source/repos/Kembyela/Kembyela/Views/Traite/Stats.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaXRlXFN0YXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MSI/source/repos/Kembyela/Kembyela/Views/Traite/Visualiser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaXRlXFZpc3VhbGlzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MSI/source/repos/Kembyela/Kembyela/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

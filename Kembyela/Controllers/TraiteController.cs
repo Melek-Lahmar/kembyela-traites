@@ -375,6 +375,25 @@ namespace Kembyela.Controllers
 
             return View(traite);
         }
+        // GET: /Traite/Visualiser/id
+        public async Task<IActionResult> Visualiser(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            var traite = await _context.Traites.FindAsync(id);
+
+            if (traite == null)
+            {
+                TempData["ErrorMessage"] = "Lettre de change introuvable";
+                return RedirectToAction("Index");
+            }
+
+            // Format RIB
+            traite.RIB = FormaterRIB(traite.RIB);
+
+            return View(traite);
+        }
 
         private string FormaterRIB(string rib)
         {
@@ -409,7 +428,7 @@ namespace Kembyela.Controllers
             // Construction du RIB formaté avec &nbsp; (espaces non-breaking)
             var resultat = new StringBuilder();
             resultat.Append(ribNettoye.Substring(0, 2));        // 2 premiers
-            resultat.Append("&nbsp;"); // 6 espaces HTML
+            resultat.Append("&nbsp;&nbsp"); // 6 espaces HTML
             resultat.Append(ribNettoye.Substring(2, 3));        // 3 suivants
             resultat.Append("&nbsp;&nbsp;&nbsp"); // 6 espaces HTML
             resultat.Append(ribNettoye.Substring(5, 13));       // 13 suivants

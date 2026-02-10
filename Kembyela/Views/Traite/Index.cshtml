@@ -405,6 +405,15 @@
                                                 </button>
                                             </form>
                                         }
+                                        <!-- Bouton Visualiser -->
+                                        <a asp-action="Visualiser" asp-route-id="@traite.Id"
+                                           class="btn btn-sm px-3 kem-btn-action kem-btn-visualiser"
+                                           target="_blank"
+                                           title="Visualiser">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+
 
                                         <!-- Bouton Imprimer -->
                                         <a asp-action="Print" asp-route-id="@traite.Id"
@@ -585,28 +594,124 @@
         background-color: rgba(220, 53, 69, 0.05);
     }
 
-    /* Styles pour les boutons */
+    /* =============================== */
+    /* ACTIONS: barre de boutons clean */
+    /* =============================== */
+
+    .kem-action-buttons .kem-btn-group {
+        display: inline-flex;
+        gap: 6px;
+        padding: 6px;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    /* Tous les boutons d'actions (a + button) */
+    .kem-action-buttons .kem-btn-action {
+        width: 38px; /* largeur fixe */
+        height: 34px; /* hauteur fixe */
+        padding: 0 !important; /* pour éviter l'incohérence Bootstrap */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        box-shadow: none !important;
+        transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+
+        /* Icônes uniformes */
+        .kem-action-buttons .kem-btn-action i {
+            font-size: 14px;
+        }
+
+        /* Hover plus joli */
+        .kem-action-buttons .kem-btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.10) !important;
+            filter: brightness(1.02);
+        }
+
+        /* Focus (accessibilité) */
+        .kem-action-buttons .kem-btn-action:focus,
+        .kem-action-buttons .kem-btn-action:focus-visible {
+            outline: none !important;
+            box-shadow: 0 0 0 4px rgba(52,152,219,0.18) !important;
+        }
+
+    /* =============================== */
+    /* Variantes couleurs harmonisées  */
+    /* =============================== */
+
+    /* Payée (check vert) */
     .kem-btn-pay {
-        background-color: #28a745;
-        color: white;
-        border: none;
+        background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
+        color: #fff !important;
+        border: none !important;
     }
 
         .kem-btn-pay:hover {
-            background-color: #218838;
-            color: white;
+            filter: brightness(0.98);
         }
 
+    /* Non payée (warning) */
     .kem-btn-unpay {
-        background-color: #ffc107;
-        color: #212529;
-        border: none;
+        background: linear-gradient(135deg, #f1c40f, #f39c12) !important;
+        color: #1f2d3d !important;
+        border: none !important;
     }
 
         .kem-btn-unpay:hover {
-            background-color: #e0a800;
-            color: #212529;
+            filter: brightness(0.98);
         }
+
+    /* Visualiser */
+    .kem-btn-visualiser {
+        background: linear-gradient(135deg, #3498db, #21618c) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+        .kem-btn-visualiser:hover {
+            filter: brightness(0.98);
+        }
+
+    /* Imprimer */
+    .kem-btn-print {
+        background: #fff !important;
+        color: #21618c !important;
+        border: 1px solid rgba(33,97,140,0.25) !important;
+    }
+
+        .kem-btn-print:hover {
+            background: rgba(52,152,219,0.10) !important;
+        }
+
+    /* Dupliquer */
+    .kem-btn-duplicate {
+        background: #fff !important;
+        color: #b9770e !important;
+        border: 1px solid rgba(185,119,14,0.25) !important;
+    }
+
+        .kem-btn-duplicate:hover {
+            background: rgba(243,156,18,0.12) !important;
+        }
+
+    /* Supprimer */
+    .kem-btn-delete {
+        background: #fff !important;
+        color: #c0392b !important;
+        border: 1px solid rgba(192,57,43,0.25) !important;
+    }
+
+        .kem-btn-delete:hover {
+            background: rgba(231,76,60,0.12) !important;
+        }
+
+
 
     /* Badges dans le header */
     .kem-badge-paid {

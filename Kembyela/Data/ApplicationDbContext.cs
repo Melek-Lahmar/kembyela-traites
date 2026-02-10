@@ -16,13 +16,16 @@ namespace Kembyela.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuration de la table Traites
             modelBuilder.Entity<Traite>(entity =>
             {
+                // =========================
                 // Clé primaire
+                // =========================
                 entity.HasKey(e => e.Id);
 
-                // Configuration des colonnes
+                // =========================
+                // Champs principaux
+                // =========================
                 entity.Property(e => e.Montant)
                     .HasPrecision(18, 3)
                     .IsRequired();
@@ -36,6 +39,16 @@ namespace Kembyela.Data
                     .HasMaxLength(100)
                     .IsRequired();
 
+                entity.Property(e => e.DateEdition)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETDATE()");
+
+                entity.Property(e => e.DateEcheance)
+                    .IsRequired();
+
+                // =========================
+                // Bénéficiaire & paiement
+                // =========================
                 entity.Property(e => e.OrdreDe)
                     .HasMaxLength(200)
                     .IsRequired();
@@ -47,10 +60,19 @@ namespace Kembyela.Data
                 entity.Property(e => e.Aval)
                     .HasMaxLength(200);
 
+                // =========================
+                // Banque
+                // =========================
                 entity.Property(e => e.Banque)
                     .HasMaxLength(200)
                     .IsRequired();
 
+                entity.Property(e => e.AdresseBanque)
+                    .HasMaxLength(300);
+
+                // =========================
+                // Autres infos
+                // =========================
                 entity.Property(e => e.Monnaie)
                     .HasMaxLength(10)
                     .HasDefaultValue("DT");
@@ -61,16 +83,18 @@ namespace Kembyela.Data
                 entity.Property(e => e.Protestable)
                     .HasDefaultValue(true);
 
+                entity.Property(e => e.EstPayee)
+                    .HasDefaultValue(false);
+
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.DateEdition)
-                    .HasDefaultValueSql("GETDATE()");
-
-                // Index pour améliorer les performances
-                entity.HasIndex(e => e.DateEcheance);
-                entity.HasIndex(e => e.CreatedAt);
+                // =========================
+                // Index (performances)
+                // =========================
                 entity.HasIndex(e => e.RIB);
+                entity.HasIndex(e => e.CreatedAt);
+                entity.HasIndex(e => e.DateEcheance);
             });
         }
     }
